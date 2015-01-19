@@ -1,0 +1,36 @@
+All GET requests include pagination as well as ways to filter based on the fields of the data model.
+
+/user
+    * POST: create new user
+    * GET: get a list of users.
+
+/user/<username>
+    * GET: Get profile information/feed
+    * PUT: update profile information
+    * DELETE: Remove the user and all the associated content
+
+/blogs
+    * GET: Get a list of blogs with optional filtering.
+    * POST: Add a new blog.
+
+/blog/<blogid>
+    * put: Update blog information
+    * DELETE: Remove blog
+
+/blog/<blogid>/posts
+    * GET: Get a list of the blog's posts.
+    * POST: Add a new post
+
+/blog/<blogid>/post/<postid>
+    * GET: Get the post content.
+    * PUT: Update the post.
+    * DELETE: Delete the post
+
+/blog/<blogid>/post/<blogid>/comments
+    * GET: Get the comments related to postid.
+    * POST: Add a new comment.
+
+/blog/<blogid>/post/<postid>/comment/<commentid>
+    * GET: Get the comment data
+    * PUT: Modify comment
+    * DELETE: Delete comment
