@@ -1,0 +1,10 @@
+{
+    "name": "TurinaBlog",
+    "description": "Blog platform project.",
+    "author": "Pyry Nikunen <pyry.nikunen@cs.tamk.fi>",
+    "dependencies": {
+        "express": "4.5.x",
+        "mongoose": "3.8.x"
+    },
+    "engine": "node 0.10.35"
+}
