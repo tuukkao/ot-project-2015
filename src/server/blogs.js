@@ -1,5 +1,13 @@
+var dummydata = require("./dummy");
+
+function writeResponse(response, content) {
+    response.header("Content-Type", "application/json");
+    response.end(content)
+}
+
 exports.getBlogs = function(request, response) {
-    response.send(request.params);
+    dummydata.getAllBlogs(response, writeResponse);
+
 };
 
 exports.addBlog = function(request, response) {
