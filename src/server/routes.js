@@ -1,6 +1,6 @@
 module.exports = function(app){
     var blogs = require("./blogs");
-    var user = require("./user");
+    var users = require("./users");
     var posts = require("./posts");
     var comments = require("./comments");
 
@@ -24,7 +24,10 @@ module.exports = function(app){
     app.put('/blog/:blogid/post/:postid/comments/:commentid', comments.updateComment);
     app.delete('/blog/:blogid/post/:postid/comments/:commentid', comments.deleteComment);
 
-    app.get('/user/:username', user.getUser);
-    app.put('/user/:username', user.updateUser);
-    app.delete('/user/:username', user.deleteUser);
+    app.get('/users', users.getUsers);
+    app.post('/users', users.addUser);
+
+    app.get('/user/:username', users.getUser);
+    app.put('/user/:username', users.updateUser);
+    app.delete('/user/:username', users.deleteUser);
 }

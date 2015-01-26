@@ -1,6 +1,6 @@
 All GET requests include pagination as well as ways to filter based on the fields of the data model.
 
-/user
+/users
     * POST: create new user
     * GET: get a list of users.
 
