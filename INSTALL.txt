@@ -1,0 +1,89 @@
+# INSTALLATION INSTRUCTIONS
+
+If you haven't used Node.js and MongoDB before, you should follow these
+instructions.
+
+WINDOWS
+
+    1. Install NodeJS (http://nodejs.org)
+
+    2. Open Command Prompt and type in:
+
+        node -v
+
+    And you should see version number of the node installed. If node -v command
+    did not work see setting PATHs section below!
+
+    3. Now on Command Prompt type in:
+
+        npm -v
+
+    If you got out the version of NPM (Node Package Manager) Node was successfully installed!.
+
+    4. Now install MongoDB (http://www.mongodb.org/downloads)
+
+    5. Open Command Prompt and type in:
+
+        mongo --version
+
+    And once again version number should be printed out. If not see setting PATHs section!
+
+
+    Setting PATHs
+
+    1. On windows 8.x hit windwos button and type in system environment variables and click
+        "Edit System Environment Variables"
+         	-> Environment Variables...
+    2. Select PATH and click Edit...
+    Add:
+    	<NodeJS install path>\nodejs;
+    (Default path C:\Program Files\nodejs)
+    	<Path to NPM>\npm;
+    (Should be something like C:\Users\<username>\AppData\Roaming\npm)
+    	<MongoDB install path>\MongoDB\bin;
+    (Default path C:\Program Files\MongoDB\bin)
+
+    If this doesn't help, try running these commands on Git Bash or PowerShell.
+
+OS X
+
+    1. Install NodeJS (http://nodejs.org)
+
+    2. Open Terminal and type in:
+
+        node -v
+
+        and
+
+        npm -v
+
+    If you got out the version of Node and NPM (Node Package Manager) Node was successfully installed!.
+
+    4. Now install MongoDB (http://www.mongodb.org/downloads)
+
+    5. Open Terminal and type in:
+
+        open ~/.bash_profile on editor
+        and append file with following export:
+            export PATH=<install path>/mongodb/bin:$PATH
+
+        and try
+
+        mongo --version
+
+    If that printed out MongoDB version everything is now installed successfully.
+
+#  SETTING UP THE DEVELOPMENT ENVIRONMENT:
+
+    On Terminal / Command Prompt:
+
+        1. cd <project>/src
+
+        2. npm install
+
+        3. cd server
+
+        4. node server.js
+            - Server is running now!
+
+    END OF FILE
