@@ -1,3 +1,12 @@
+exports.getUsers = function (request, response) {
+    response.send(request.params);
+}
+
+exports.addUser = function (request, response)
+{
+    response.send(request.params);
+}
+
 exports.getUser = function(request, response) {
     response.send(request.params);
 };
