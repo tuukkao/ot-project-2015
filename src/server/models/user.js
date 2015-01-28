@@ -7,4 +7,4 @@ var userSchema = mongoose.Schema({
     blogs: [mongoose.Schema.Types.ObjectId]
 });
 
-module.exports = mongoose.model('User', userSchema);
+exports = mongoose.model('User', userSchema);
