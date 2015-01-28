@@ -7,4 +7,4 @@ var blogSchema = mongoose.Schema({
     tags: { type: [String], index: true}
 });
 
-exports = mongoose.model('Blog', blogSchema);
+module.exports = mongoose.model('Blog', blogSchema);
