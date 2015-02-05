@@ -1,0 +1,34 @@
+
+<div class="post-container" ng-controller="feedController">
+    <div class="feed"  >
+        <div class="blog-item" ng-repeat="blog in blogs">
+            <div class="post-item" ng-repeat="post in blog.posts">
+                <div class="post-header" data-id="{{ post._id }}">
+                    <h4>{{ post.header }}</h4>
+                </div>
+                <div class="post-body">
+                    <p>
+                        {{ post.content }}
+                    </p>
+                </div>
+                <div class="post-footer">
+                    <p><i>{{ post.date_created }}</i> {{ post.author }}</p>
+                </div>
+                <div class="comment-container" ng-repeat="comment in post.comments">
+                    <div class="comment" data-id="{{ comment_id }}">
+                    <div class="comment-body" >
+                        <p>
+                            {{ comment.content }}
+                        </p>
+                    </div>
+                    <div class="comment-footer">
+                        <p>
+                            <i>{{ comment.date_created }}</i> {{ comment.author }}
+                        </p>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div>
