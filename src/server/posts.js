@@ -1,30 +1,50 @@
-var dummydata = require("./dummy");
-
-function writeResponse(response, content) {
-    response.header("Content-Type", "application/json");
-    response.end(content)
-}
+var mongoose = require("mongoose");
+var Post = require("./models/post");
+var Blog = require("./models/blog");
 
 exports.getPostsForBlog = function(request, response) {
-    var blogid = request.param("blogid");
-    dummydata.getAllPosts(blogid, response, writeResponse);
+    Post.find({'parent_blog': request.params.blogid}, function(err, posts) {
+        if (err) response.send(err);
+        response.json(posts);
+    });
 };
 
 exports.addPostToBlog = function(request, response) {
-
-    response.send(request.params);
+    request.body.parent_blog = request.params.blogid;
+    post = new Post(request.body);
+    post.save(function(err) {
+        if(err) return response.send(err);
+        response.json({'message': 'Post added.'});
+    });
 };
 
 exports.getPost = function(request, response) {
-    var blogid = request.param("blogid");
-    var postid = request.param("postid");
-    dummydata.getPost(blogid, postid, response, writeResponse);
+    Post.findOne({'parent_blog': request.params.blogid, '_id': request.params.postid}, function(err, post) {
+        if (err) {
+            return response.send(err);
+        } else if (post == null) {
+            response.status(404).json("Unknown post.");
+        } else {
+            response.json(post);
+        }
+    });
 };
 
 exports.updatePost = function(request, response) {
-    response.send(request.params);
+    Post.update({'parent_blog': request.params.blogid, '_id': request.params.postid}, function(err, numRows) {
+        if (err) {
+            return response.send(err);
+        } else if (numRows == 0) {
+            response.status(404).json({'message': 'Unknown post.'});
+        } else {
+            response.json({'message': 'Post updated.'});
+        }
+    });
 };
 
 exports.deletePost = function(request, response) {
-    response.send(request.params);
+    Post.remove({'parent_blog': request.params.blogid, '_id': request.params.postid}, function(err) {
+        if (err) return response.send(err);
+        response.json({'message': 'Post deleted.'});
+    });
 };
