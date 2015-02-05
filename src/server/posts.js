@@ -3,7 +3,7 @@ var Post = require("./models/post");
 var Blog = require("./models/blog");
 
 exports.getPostsForBlog = function(request, response) {
-    Post.find({'parent_blog': request.params.blogid}, function(err, posts) {
+    Post.find({'parent_blog': request.params.blogid}, "-comments", function(err, posts) {
         if (err) response.send(err);
         response.json(posts);
     });
@@ -19,7 +19,7 @@ exports.addPostToBlog = function(request, response) {
 };
 
 exports.getPost = function(request, response) {
-    Post.findOne({'parent_blog': request.params.blogid, '_id': request.params.postid}, function(err, post) {
+    Post.findOne({'parent_blog': request.params.blogid, '_id': request.params.postid}, "-comments", function(err, post) {
         if (err) {
             return response.send(err);
         } else if (post == null) {
