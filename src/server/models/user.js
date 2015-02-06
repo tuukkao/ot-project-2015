@@ -4,7 +4,7 @@ var userSchema = mongoose.Schema({
     display_name: { type: String, required: true },
     description: String,
     created_at: { type: Date, default: Date.now },
-    blogs: [mongoose.Schema.Types.ObjectId]
+    blogs: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Blog' } ]
 });
 
 module.exports = mongoose.model('User', userSchema);
