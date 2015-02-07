@@ -11,3 +11,4 @@ mongoose.connect(config.db_uri);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 expressApp.listen(config.api_port);
+console.log("Listening port: "+config.api_port);
