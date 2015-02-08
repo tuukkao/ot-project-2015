@@ -5,7 +5,9 @@
   "dependencies": {
     "body-parser": "^1.10.2",
     "express": "4.5.x",
-    "mongoose": "3.8.x"
+    "mongoose": "3.8.x",
+    "cors": "2.5.3"
+
   },
   "engine": "node 0.10.35"
 }
