@@ -1,36 +1,33 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <link href='http://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,700,100italic,300italic,400italic' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="feed.css" type="text/css" />
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
-    </head>
-    <body>
-        <div id="top">
-            <div style="float: left;">TurinaBlogi</div>
-            <div style="float: right;">Login | Register</div>
-        </div>
-        
-        <div id="feed">
-            <div class="post">
-                <table class="post_info">
-                    <tr>
-                        <td class="post_info_profile_image"><div style="width: 100px; height: 100px; background-image: url('img/profile.jpg'); background-size: 100px 100px; border-radius: 10px; box-shadow: 0px 3px 5px #000000;"></div></td>
-                        <td class="post_info_title">
-                            <h1>OTSIKKO</h1>
-                            <h2>by Aapeli Kutila</h2>
-                            <h3>19.1.2015, 10:47</h3>
-                        </td>
-                    </tr>
-                </table>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed posuere interdum sem. Quisque ligula eros ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam vitae arcu. Sed arcu lectus auctor vitae, consectetuer et venenatis eget velit. Sed augue orci, lacinia eu tincidunt et eleifend nec lacus. Donec ultricies nisl ut felis, suspendisse potenti. Lorem ipsum ligula ut hendrerit mollis, ipsum erat vehicula risus, eu suscipit sem libero nec erat. Aliquam erat volutpat. Sed congue augue vitae neque. Nulla consectetuer porttitor pede. Fusce purus morbi tortor magna condimentum vel, placerat id blandit sit amet tortor.</p>
-
-                <p>Mauris sed libero. Suspendisse facilisis nulla in lacinia laoreet, lorem velit accumsan velit vel mattis libero nisl et sem. Proin interdum maecenas massa turpis sagittis in, interdum non lobortis vitae massa. Quisque purus lectus, posuere eget imperdiet nec sodales id arcu. Vestibulum elit pede dictum eu, viverra non tincidunt eu ligula.</p>
-
-                <p>Nam molestie nec tortor. Donec placerat leo sit amet velit. Vestibulum id justo ut vitae massa. Proin in dolor mauris consequat aliquam. Donec ipsum, vestibulum ullamcorper venenatis augue. Aliquam tempus nisi in auctor vulputate, erat felis pellentesque augue nec, pellentesque lectus justo nec erat. Aliquam et nisl. Quisque sit amet dolor in justo pretium condimentum.</p>
-
-                <p>Vivamus placerat lacus vel vehicula scelerisque, dui enim adipiscing lacus sit amet sagittis, libero enim vitae mi. In neque magna posuere, euismod ac tincidunt tempor est. Ut suscipit nisi eu purus. Proin ut pede mauris eget ipsum. Integer vel quam nunc commodo consequat. Integer ac eros eu tellus dignissim viverra. Maecenas erat aliquam erat volutpat. Ut venenatis ipsum quis turpis. Integer cursus scelerisque lorem. Sed nec mauris id quam blandit consequat. Cras nibh mi hendrerit vitae, dapibus et aliquam et magna. Nulla vitae elit. Mauris consectetuer odio vitae augue.</p>
+<div class="post-container" ng-controller="feedController">
+    <div class="feed"  >
+        <div class="blog-item" ng-repeat="blog in blogs">
+            <div class="post-item" ng-repeat="post in blog.posts">
+                <div class="post-header" data-id="{{ post._id }}">
+                    <h4>{{ post.header }}</h4>
+                </div>
+                <div class="post-body">
+                    <p>
+                        {{ post.content }}
+                    </p>
+                </div>
+                <div class="post-footer">
+                    <p><i>{{ post.date_created }}</i> {{ post.author }}</p>
+                </div>
+                <div class="comment-container" ng-repeat="comment in post.comments">
+                    <div class="comment" data-id="{{ comment_id }}">
+                    <div class="comment-body" >
+                        <p>
+                            {{ comment.content }}
+                        </p>
+                    </div>
+                    <div class="comment-footer">
+                        <p>
+                            <i>{{ comment.date_created }}</i> {{ comment.author }}
+                        </p>
+                    </div>
+                </div>
+                </div>
             </div>
         </div>
-    </body>
-</html>
+    </div>
+<div>
