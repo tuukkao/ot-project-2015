@@ -23,7 +23,7 @@ exports.getComment = function(request, response) {
     Post.findOne({'parent_blog': request.params.blogid, '_id': request.params.postid}, 'comments', function(err, post) {
         if(err) return response.send(err);
         comment = post.comments.id(request.params.commentid);
-        
+
         if (comment == null) {
             response.status(404).json({'message': 'Unknown comment.'});
         } else {
@@ -37,9 +37,9 @@ exports.updateComment = function(request, response) {
     for (var key in request.body) {
         set['comments.$.' + key] = request.body[key];
     }
-    
+
     Post.update({'parent_blog': request.params.blogid, '_id': request.params.postid,
-    'comments._id': request.params.commentid},
+    'comments._id': request.params.commentid, 'comments.author': request.user_id},
     {'$set': set }, function(err) {
         if (err) return response.send(err);
         response.json({'message': 'Comment updated.'});
@@ -50,7 +50,9 @@ exports.deleteComment = function(request, response) {
     Post.findOne({'parent_blog': request.params.blogid, '_id': request.params.postid}, 'comments', function(err, post) {
         if(err) return response.send(err);
         comment = post.comments.id(request.params.commentid);
-        
+        // Not sure if this even works !!
+        comment = comment.author(request.user_id);
+
         if (comment == null) {
             response.status(404).json({'message': 'Unknown document.'});
         } else {

@@ -20,7 +20,8 @@ exports.addBlog = function(request, response) {
 };
 
 exports.updateBlog = function(request, response) {
-    Blog.update({'_id': request.params.blogid}, request.body, function(err, numRows) {
+    console.log(request.user_id);
+    Blog.update({'_id': request.params.blogid, 'author': request.user_id}, request.body, function(err, numRows) {
         if (err) {
             return response.send(err);
         } else if (numRows == 0) {
@@ -32,7 +33,7 @@ exports.updateBlog = function(request, response) {
 };
 
 exports.deleteBlog = function(request, response) {
-    Blog.remove({'_id': request.params.blogid}, function(err) {
+    Blog.remove({'_id': request.params.blogid, 'author': request.user_id}, function(err) {
         if (err) return response.send(err);
         response.json({'message': 'Blog deleted.'});
     });
