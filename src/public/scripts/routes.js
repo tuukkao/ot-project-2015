@@ -4,6 +4,6 @@ var app = angular.module('app');
         $routeProvider
             .when('/', {
                 templateUrl: 'index.html',
-                controller: 'feedController'
+                controller: 'mainController'
             })
     }]);

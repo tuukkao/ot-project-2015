@@ -1,0 +1,53 @@
+body {
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+div, ul, li, a {
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+
+.navigation-container {
+    background-color: grey;
+    margin: 0px 0px 0px 0px;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 10px;
+    width: 90%;
+    position: fixed;
+    top: 0px;
+    height: 40px;
+}
+
+.login-template {
+    margin: 0px 0px 0px 0px;
+    float: right;
+}
+
+.navigation-template {
+    width: 60%;
+    margin: 0px 0px 0px 0px;
+    float: left;
+}
+
+.navigation-template li {
+    width: 24%;
+    margin: 0px 0px 0px 0px;
+    display: inline-block;
+}
+
+.navigation-template a {
+    padding: 10px 0px 10px 0px !important;
+    size:20px;
+    margin: 0px 0px 0px 0px;
+    text-decoration: none;
+    color: black;
+}
+
+.content {
+    margin: 0 auto;
+    margin-top: 60px;
+    width: 80%;
+
+}

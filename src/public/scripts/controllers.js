@@ -50,3 +50,14 @@ app.controller('loginController', ['$scope', 'Authorization', function($scope, A
         })
     }
 }])
+
+app.controller('mainController',['$scope', function($scope) {
+
+}])
+
+app.controller('navigationController', ['$scope', '$location', function ($scope, $location) {
+    $scope.navClass = function (page) {
+        var currentRoute = $location.path().substring(1) || 'home';
+        return page === currentRoute ? 'active' : '';
+    };
+}])

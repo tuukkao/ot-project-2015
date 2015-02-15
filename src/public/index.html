@@ -6,13 +6,17 @@
         <script src="./scripts/constants.js"></script>
         <script src="./scripts/controllers.js"></script>
         <script src="./scripts/services.js"></script>
+        <link rel="stylesheet" href="/content/style.css" charset="utf-8">
     </head>
     <body>
-        <div class="navi-bar">
+        <div class="navigation-container">
             <div ng-include src="'views/login.html'"></div>
+            <div ng-include src="'views/navigation.html'"></div>
         </div>
-        <div ng-include src="'views/feed.html'">
+        <div class="content">
+            <div ng-include src="'views/feed.html'">
 
+            </div>
         </div>
         <div class="footer">
         </div>
