@@ -30,9 +30,8 @@ exports.authenticate = function(request, response) {
         } else {
             if (user) {
                 response.json({
-                    type: true,
-                    data: user,
-                    token: user.token
+                    token: user.token,
+                    _id: user._id
                 });
             } else {
                 response.json({
