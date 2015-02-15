@@ -45,7 +45,7 @@ exports.getUser = function(request, response) {
 };
 
 exports.updateUser = function(request, response) {
-    User.update({ 'token': request.token }, request.body, function(err, numRows) {
+    User.update({ '_id': request.user_id }, request.body, function(err, numRows) {
         if (err) {
             return response.send(err);
         }else if (numRows == 0) {
@@ -57,7 +57,7 @@ exports.updateUser = function(request, response) {
 };
 
 exports.deleteUser = function(request, response) {
-    User.remove({ 'token': request.token }, function(err) {
+    User.remove({ '_id': request.user_id }, function(err) {
         if (err) return console.error(err);
     });
 };

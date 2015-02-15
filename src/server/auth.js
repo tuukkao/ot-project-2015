@@ -1,34 +1,27 @@
 var mongoose = require('mongoose');
 var User = require('./models/user');
+var config = require('./config');
+var jwt = require('jsonwebtoken');
 
 exports.confirmAuth = function(request, response, next) {
     var token;
     var header = request.headers["authorization"];
     if (typeof header !== 'undefined') {
         var bearer = header.split(" ");
-        token = bearer[1];
-        User.findOne({ 'token': token }, function(err, user) {
-            if (err) {
-                response.json({
-                    type: false,
-                    data: "Error occured " +err
-                });
+        token = bearer[0];
+        jwt.verify(token, config.jwt_key, function(err, decoded) {
+            if(err) {
+                response.send(401);
             } else {
-                if (user) {
-                    request.token = token;
-                    next();
-                } else {
-                    response.send(403);
-                }
+                request.user_id = decoded._id;
+                next();
             }
         });
     }
 }
 
 exports.authenticate = function(request, response) {
-    console.log("Trying to log in. User: "+ request.body.username+" Password: "+ request.body.password);
     User.findOne({ 'username': request.body.username, 'password': request.body.password }, function(err, user) {
-        console.log("Query complete.");
         if (err) {
             response.json({
                 type: false,
@@ -52,25 +45,20 @@ exports.authenticate = function(request, response) {
 }
 
 exports.register = function(request, response, next) {
-    console.log("Trying to register user.");
     User.findOne(
         { $or: [{ 'email': request.body.email }, { 'username': request.body.email }] }, function(err, user) {
-            console.log("Query complete.");
             if (err) {
-                console.log("Error occured.");
                 response.json({
                     type: false,
                     data: 'Error occured '+err
                 });
             } else {
                 if (user) {
-                    console.log("User exists.");
                     response.json({
                         type: false,
                         data: "User already exists!"
                     });
                 } else {
-                    console.log("Moving to next function!, next.");
                     next();
                 }
             }

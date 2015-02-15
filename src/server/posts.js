@@ -31,7 +31,7 @@ exports.getPost = function(request, response) {
 };
 
 exports.updatePost = function(request, response) {
-    Post.update({'parent_blog': request.params.blogid, '_id': request.params.postid}, function(err, numRows) {
+    Post.update({'parent_blog': request.params.blogid, '_id': request.params.postid, 'parent_blog.author': request.user_id}, function(err, numRows) {
         if (err) {
             return response.send(err);
         } else if (numRows == 0) {
@@ -43,7 +43,7 @@ exports.updatePost = function(request, response) {
 };
 
 exports.deletePost = function(request, response) {
-    Post.remove({'parent_blog': request.params.blogid, '_id': request.params.postid}, function(err) {
+    Post.remove({'parent_blog': request.params.blogid, '_id': request.params.postid, 'parent_blog.author': request.user_id}, function(err) {
         if (err) return response.send(err);
         response.json({'message': 'Post deleted.'});
     });
