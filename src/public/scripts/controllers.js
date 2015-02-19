@@ -4,7 +4,7 @@ var app = angular.module('app');
  *
  */
 app.controller('mainController',['$scope', function($scope) {
-
+    $scope.message = "INDEX";
 }])
 
 /**
@@ -68,8 +68,35 @@ app.controller('loginController', ['$scope', 'Authorization', function($scope, A
 }])
 
 /**
- * NavigationController will take care of fetching right PartialView at right
- * time.
+ *
+ *
+ */
+app.controller('blogController', ['$scope', function($scope) {
+    $scope.message = "blogs";
+}])
+
+/**
+ *
+ *
+ */
+app.controller('profileController', ['$scope', function($scope) {
+    $scope.message = "profile";
+}])
+
+/**
+ *
+ *
+ */
+app.controller('signupController', ['$scope', function($scope) {
+    $scope.message = "signup";
+}])
+
+
+app.controller('aboutController', ['$scope', function($scope) {
+    $scope.message = "about";
+}])
+/**
+ *
  *
  */
 app.controller('navigationController', ['$scope', '$location', function ($scope, $location) {
