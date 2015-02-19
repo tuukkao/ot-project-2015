@@ -1,5 +1,16 @@
 var app = angular.module('app');
+/**
+ * MainController will take care that the right stuff is shown at right time.
+ *
+ */
+app.controller('mainController',['$scope', function($scope) {
 
+}])
+
+/**
+ * FeedController will take care of getting the right feed for the user.
+ *
+ */
 app.controller('feedController', ['$scope', 'Blogs', 'Posts', function ($scope, Blogs, Posts) {
     $scope.blogs = [];
     Blogs.success(function(data){
@@ -31,6 +42,11 @@ app.controller('feedController', ['$scope', 'Blogs', 'Posts', function ($scope, 
     }
 }])
 
+
+/**
+ * LoginContoller manages frontend authentication of the user.
+ *
+ */
 app.controller('loginController', ['$scope', 'Authorization', function($scope, Authorization) {
     $scope.username = "TestiHemmo";
     $scope.password = "testi";
@@ -51,10 +67,11 @@ app.controller('loginController', ['$scope', 'Authorization', function($scope, A
     }
 }])
 
-app.controller('mainController',['$scope', function($scope) {
-
-}])
-
+/**
+ * NavigationController will take care of fetching right PartialView at right
+ * time.
+ *
+ */
 app.controller('navigationController', ['$scope', '$location', function ($scope, $location) {
     $scope.navClass = function (page) {
         var currentRoute = $location.path().substring(1) || 'home';
