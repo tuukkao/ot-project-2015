@@ -12,11 +12,17 @@
         <script src="./scripts/routes.js"></script>
         <link rel="stylesheet" href="/content/style.css" charset="utf-8">
     </head>
-    <body>
+    <body ng-controller="appController">
         <div class="navigation-container">
-            <div ng-include src="'views/login.html'"></div>
-            <div ng-include src="'views/navigation.html'"></div>
-        </div>
+            <div ng-switch="isAuthenticated">
+                <div ng-switch-when="true">
+                    <div ng-include="'views/nav-auth.html'"></div>
+                </div>
+                <div ng-switch-when="false">
+                    <div ng-include="'views/nav.html'"></div>
+                    <div ng-include="'views/login.html'"></div>
+                </div>
+            </div>
         <div class="content">
             <div ng-view=""></div>
         </div>

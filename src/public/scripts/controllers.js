@@ -1,17 +1,28 @@
-var app = angular.module('app');
+angular.module('app')
 /**
  * MainController will take care that the right stuff is shown at right time.
  *
  */
-app.controller('mainController',['$scope', function($scope) {
+.controller('appController', function($scope, USER_ROLES, Authorization) {
+    console.log($scope.currentUser);
+    $scope.userRoles = USER_ROLES;
+    $scope.isAuthenticated = Authorization.isAuthenticated();
+    $scope.currentUser = null;
+    $scope.setCurrentUser = function (user) {
+        $scope.currentUser = user;
+        $scope.isAuthenticated = Authorization.isAuthenticated();
+    };
+})
+.controller('indexController', ['$scope', function($scope) {
     $scope.message = "INDEX";
+    console.log('Current user: '+$scope.currentUser);
+    console.log('Is authenticated? '+$scope.isAuthenticated);
 }])
-
 /**
  * FeedController will take care of getting the right feed for the user.
  *
  */
-app.controller('feedController', ['$scope', 'Blogs', 'Posts', function ($scope, Blogs, Posts) {
+.controller('feedController', ['$scope', 'Blogs', 'Posts', function ($scope, Blogs, Posts) {
     $scope.blogs = [];
     Blogs.success(function(data){
         console.log(data);
@@ -47,23 +58,22 @@ app.controller('feedController', ['$scope', 'Blogs', 'Posts', function ($scope, 
  * LoginContoller manages frontend authentication of the user.
  *
  */
-app.controller('loginController', ['$scope', 'Authorization', function($scope, Authorization) {
-    $scope.username = "TestiHemmo";
-    $scope.password = "testi";
-    $scope.login = function() {
-        console.log("User: "+$scope.username+"\n Password: "+$scope.password);
-        var credentials = { username: $scope.username, password: $scope.password }
-        console.log(credentials);
-        Authorization.authenticate(credentials)
-        .success(function (data) {
-            window.localStorage.token = data.token;
-            window.localStorage.userId = data._id;
-            console.log(window.localStorage);
-        })
-        .error(function (data) {
-            delete window.localStorage.token;
-            delete window.localStorage.userId;
-        })
+.controller('loginController', ['$scope', '$rootScope','Authorization', 'AUTH_EVENTS',
+            function($scope, $rootScope, Authorization, AUTH_EVENTS) {
+    $scope.credentials = {
+        username : '',
+        password : ''
+        };
+    $scope.login = function(credentials) {
+        var success = function(data) {
+            console.log(data);
+            $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+            $scope.setCurrentUser(data.token);
+        };
+        var error =  function() {
+            $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+        };
+        Authorization.authenticate(credentials, success, error);
     }
 }])
 
@@ -71,7 +81,7 @@ app.controller('loginController', ['$scope', 'Authorization', function($scope, A
  *
  *
  */
-app.controller('blogController', ['$scope', function($scope) {
+.controller('blogController', ['$scope', function($scope) {
     $scope.message = "blogs";
 }])
 
@@ -79,7 +89,7 @@ app.controller('blogController', ['$scope', function($scope) {
  *
  *
  */
-app.controller('profileController', ['$scope', function($scope) {
+.controller('profileController', ['$scope', function($scope) {
     $scope.message = "profile";
 }])
 
@@ -87,21 +97,22 @@ app.controller('profileController', ['$scope', function($scope) {
  *
  *
  */
-app.controller('signupController', ['$scope', function($scope) {
+.controller('signupController', ['$scope', function($scope) {
     $scope.message = "signup";
 }])
 
 
-app.controller('aboutController', ['$scope', function($scope) {
+.controller('aboutController', ['$scope', function($scope) {
     $scope.message = "about";
 }])
 /**
  *
  *
  */
-app.controller('navigationController', ['$scope', '$location', function ($scope, $location) {
+.controller('navigationController', ['$scope', '$location', function ($scope, $location) {
     $scope.navClass = function (page) {
         var currentRoute = $location.path().substring(1) || 'home';
         return page === currentRoute ? 'active' : '';
     };
 }])
+;
