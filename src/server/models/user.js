@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+
 var userSchema = mongoose.Schema({
     username: { type: String, unique: true, required: true, index: true },
     password: { type: String, required: true },
@@ -8,7 +9,9 @@ var userSchema = mongoose.Schema({
     description: String,
     created_at: { type: Date, default: Date.now },
     blogs: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Blog' } ],
-    blogs_followed: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Blog' } ]
+    blogs_followed: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Blog' } ],
+    profile_picture: { type: String, default: 'default.png' }
+
 });
 
 module.exports = mongoose.model('User', userSchema);

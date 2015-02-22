@@ -31,7 +31,7 @@ module.exports = function(app){
     app.get('/users', users.getUsers);
     app.post('/users', authorize.register, users.addUser);
 
-    app.get('/user/:username', authorize.confirmAuth, users.getUser);
-    app.put('/user/:username', authorize.confirmAuth, users.updateUser);
-    app.delete('/user/:username', authorize.confirmAuth, users.deleteUser);
+    app.get('/user/:userid', users.getUser);
+    app.put('/user/:userid', authorize.confirmAuth, users.updateUser);
+    app.delete('/user/:userid', authorize.confirmAuth, users.deleteUser);
 }

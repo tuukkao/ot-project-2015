@@ -7,7 +7,18 @@ var config = require('./config');
 exports.getUsers = function (request, response) {
     User.find().populate('blogs').exec(function (err, users) {
         if (err) return response.send(err);
-        response.json(users);
+        var userInfos = [ ];
+        users.forEach(function(user) {
+            userInfos.push({
+                display_name: user.display_name,
+                description: user.description,
+                created_at: user.created_at,
+                blogs: user.blogs,
+                blogs_followed: user.blogs_followed,
+                profile_picture: config.img_dump_path + user.profile_picture
+            });
+        });
+        response.json(userInfos);
     });
 }
 
@@ -23,7 +34,7 @@ exports.addUser = function (request, response)
                 if (err) return response.send(err);
                 response.json({
                     type: true,
-                    data: user2,
+                    data: user2._id,
                     token: user2.token
                 });
             })
@@ -32,20 +43,28 @@ exports.addUser = function (request, response)
 }
 
 exports.getUser = function(request, response) {
-    User.findOne({'username': request.params.username})
+    User.findOne({'_id': request.params.userid})
     .populate('blogs').exec(function (err, user) {
         if (err) {
             return response.send(err);
         } else if (user == null) {
             response.status(404).json({'message': 'Unknown user.'});
         } else {
-            response.json(user);
+            var userInfo = {
+                display_name: user.display_name,
+                description: user.description,
+                created_at: user.created_at,
+                blogs: user.blogs,
+                blogs_followed: user.blogs_followed,
+                profile_picture: config.img_dump_path + user.profile_picture
+            }
+            response.json(userInfo);
         }
     });
 };
 
 exports.updateUser = function(request, response) {
-    User.update({ '_id': request.user_id }, request.body, function(err, numRows) {
+    User.update({ '_id': request.userid }, request.body, function(err, numRows) {
         if (err) {
             return response.send(err);
         }else if (numRows == 0) {
@@ -57,7 +76,7 @@ exports.updateUser = function(request, response) {
 };
 
 exports.deleteUser = function(request, response) {
-    User.remove({ '_id': request.user_id }, function(err) {
+    User.remove({ '_id': request.userid }, function(err) {
         if (err) return console.error(err);
     });
 };
