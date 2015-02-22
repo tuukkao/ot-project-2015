@@ -12,6 +12,14 @@ angular.module('app')
     }
 }])
 
+.factory('User', ['$http', 'ENV', function($http, ENV) {
+    return {
+        getUser: function(userId) {
+            return $http.get(ENV.apiEndpoint + '/user/'+userId, { userid: userId });
+        }
+    }
+}])
+
 .factory('Authorization', ['$http', 'ENV', 'USER_ROLES', 'Session',
             function($http, ENV, USER_ROLES, Session) {
     var authService = {};

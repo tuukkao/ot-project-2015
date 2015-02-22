@@ -1,3 +1,10 @@
-<div ngController='profileController'>
-    {{ message }}
+<div ng-controller='profileController'>
+    <p>
+        <strong>Display Name: <br />{{ user.display_name }}</strong><br />
+        <strong>Description: <br />{{ user.description }}</strong><br />
+        <strong>Created At: <br />{{ user.created_at }}</strong><br />
+        <strong>Blogs: <br />{{ user.blogs }}</strong><br />
+        <strong>Blogs followed: <br />{{ user.blogs_followed }}</strong><br />
+        <img src="{{ user.profile_picture }}" alt="profile picture" />
+    </p>
 </div>

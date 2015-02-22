@@ -37,5 +37,11 @@ angular.module('app')
             templateUrl : 'views/about.html',
             controller  : 'aboutController'
         })
+
+        // TODO: logout
+        .when('/logout', {
+            templateUrl : 'views/logout.html',
+            controller  : 'logoutController'
+        })
 }])
 ;

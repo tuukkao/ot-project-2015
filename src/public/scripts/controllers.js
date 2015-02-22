@@ -9,7 +9,8 @@ angular.module('app')
     $scope.isAuthenticated = Authorization.isAuthenticated();
     $scope.currentUser = null;
     $scope.setCurrentUser = function (user) {
-        $scope.currentUser = user;
+        $scope.currentUser = user._id;
+        $scope.token = user.token;
         $scope.isAuthenticated = Authorization.isAuthenticated();
     };
 })
@@ -68,7 +69,7 @@ angular.module('app')
         var success = function(data) {
             console.log(data);
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-            $scope.setCurrentUser(data.token);
+            $scope.setCurrentUser(data);
         };
         var error =  function() {
             $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
@@ -89,8 +90,19 @@ angular.module('app')
  *
  *
  */
-.controller('profileController', ['$scope', function($scope) {
+.controller('profileController', ['$scope', 'User', function($scope, User) {
     $scope.message = "profile";
+    $scope.user = [];
+
+    User.getUser($scope.currentUser)
+    .success(function(data){
+        console.log(data);
+        $scope.user = data;
+        console.log($scope.user);
+    })
+    .error(function(data, status){
+        console.log(data, status);
+    });
 }])
 
 /**
