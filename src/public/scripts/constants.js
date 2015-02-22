@@ -1,7 +1,8 @@
 angular.module('app')
 .constant('ENV', {
     'name': 'development',
-    'apiEndpoint': 'http://localhost:8080'
+    'apiEndpoint': 'http://localhost:8080',
+    'imgPath' : 'http://localhost/images/'
 })
 .constant('USER_ROLES', {
     all: '*',

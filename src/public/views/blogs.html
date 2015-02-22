@@ -3,7 +3,7 @@
         <div class="blog-item" ng-repeat="blog in blogs">
             <div class="post-item" ng-repeat="post in blog.posts">
                 <div class="post-header" data-id="{{ post._id }}">
-                    <h4>{{ post.title }}</h4>
+                    <img src="http://localhost/images/{{ blog.author.profile_picture }}"/><h3>  {{ post.title }}</h3>
                 </div>
                 <div class="post-body">
                     <p>
@@ -11,12 +11,14 @@
                     </p>
                 </div>
                 <div class="post-footer">
-                    <p><i>{{ post.created_at }}</i> {{ blog.author.display_name }}</p><br />
+                    <p><i>{{ post.created_at }}</i> {{ blog.author.display_name }}</p>
                     <p>Tags: <span ng-repeat="tag in post.tags">{{ tag }} </span></p>
                 </div>
                 <div class="comment-container">
+                    <h4>Comments:</h4>
                     <div class="comments" ng-repeat="comment in post.comments">
                         <div class="comment" data-id="{{ comment_id }}">
+                            <img src="http://localhost/images/{{ blog.author.profile_picture }}"/>
                             <div class="comment-body" >
                                 <p>
                                     {{ comment.comment }}

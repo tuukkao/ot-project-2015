@@ -3,7 +3,7 @@ var Post = require("./models/post");
 var Blog = require("./models/blog");
 
 exports.getPostsForBlog = function(request, response) {
-    Post.find({'parent_blog': request.params.blogid}, "-comments", function(err, posts) {
+    Post.find({'parent_blog': request.params.blogid}, function(err, posts) {
         if (err) response.send(err);
         response.json(posts);
     });
