@@ -11,6 +11,16 @@ exports.getBlogs = function(request, response) {
     });
 };
 
+// Get specific user's blogs.
+exports.getBlogsForUser = function(request, response) {
+    Blog.find({ 'author': request.params.userid })
+    .populate('author', '-blogs')
+    .exec(function(err, blogs) {
+        if (err) return response.send(err);
+        response.json(blogs);
+    })
+}
+
 exports.addBlog = function(request, response) {
     blog = new Blog(request.body);
     blog.save(function(err) {

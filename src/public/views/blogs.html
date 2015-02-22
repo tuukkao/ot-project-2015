@@ -1,3 +1,42 @@
-<div ngController='blogController'>
-    {{ message }}
+<div class="blogs-template" ng-controller="blogController">
+    <div class="blogs"  >
+        <div class="blog-item" ng-repeat="blog in blogs">
+            <div class="post-item" ng-repeat="post in blog.posts">
+                <div class="post-header" data-id="{{ post._id }}">
+                    <h4>{{ post.title }}</h4>
+                </div>
+                <div class="post-body">
+                    <p>
+                        {{ post.content }}
+                    </p>
+                </div>
+                <div class="post-footer">
+                    <p><i>{{ post.created_at }}</i> {{ blog.author.display_name }}</p><br />
+                    <p>Tags: <span ng-repeat="tag in post.tags">{{ tag }} </span></p>
+                </div>
+                <div class="comment-container">
+                    <div class="comments" ng-repeat="comment in post.comments">
+                        <div class="comment" data-id="{{ comment_id }}">
+                            <div class="comment-body" >
+                                <p>
+                                    {{ comment.comment }}
+                                </p>
+                            </div>
+                            <div class="comment-footer">
+                                <p>
+                                    <i>{{ comment.created_at }}</i> {{ comment.author }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add-comment">
+                        <form ng-submit="addComment(post)">
+                            <input id="comment-content" type="text" ng-model="post.newComment" />
+                            <input id="submit-comment" type="submit" value="Add Comment" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

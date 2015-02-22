@@ -4,14 +4,8 @@ angular.module('app')
 
         // Route for index .
         .when('/', {
-            templateUrl: 'views/main.html',
-            controller: 'indexController'
-        })
-
-        // Route for feed
-        .when('/feed', {
-            templateUrl : 'views/feed.html',
-            controller  : 'feedController'
+            templateUrl: 'views/feed.html',
+            controller: 'feedController'
         })
 
         // Route for user's blogs

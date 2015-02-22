@@ -8,6 +8,7 @@ module.exports = function(app){
     app.post('/login', authorize.authenticate);
 
     app.get('/blogs', blogs.getBlogs);
+    app.get('/blogs/:userid', blogs.getBlogsForUser);
 
     app.post('/blogs', authorize.confirmAuth, blogs.addBlog);
 

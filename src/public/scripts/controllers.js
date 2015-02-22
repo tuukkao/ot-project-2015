@@ -82,8 +82,52 @@ angular.module('app')
  *
  *
  */
-.controller('blogController', ['$scope', function($scope) {
-    $scope.message = "blogs";
+.controller('blogController', ['$scope', 'UserFeed', 'Posts', 'Comment',
+            function($scope, UserFeed, Posts, Comment) {
+    $scope.blogs = [];
+
+    UserFeed.getBlogs($scope.currentUser)
+    .success(function(data) {
+        $scope.blogs = data;
+        fetchPosts();
+    })
+    .error(function(data, status) {
+        console.log(data, status);
+    });
+    $scope.addComment = function(post) {
+        console.log(post);
+        var blogId = post.parent_blog;
+        var postId = post._id;
+        var comment = post.newComment;
+        var author = $scope.currentUser;
+        Comment.addComment(blogId, postId, comment, author)
+            .success(function(data) {
+                console.log(data);
+                fetchPosts();
+            })
+            .error(function(data) {
+                console.log(data);
+            });
+    }
+
+    var fetchPosts = function() {
+        angular.forEach($scope.blogs, function(item) {
+            console.log(item._id);
+            if(item._id) {
+                Posts.fetchPosts(item._id)
+                .success(function(data) {
+                    if(item.posts) {
+                        item.posts = [];
+                    }
+                    item.posts = data;
+                    console.log(data);
+                })
+                .error(function(data) {
+                    console.log(data);
+                })
+            }
+        })
+    }
 }])
 
 /**
