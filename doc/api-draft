@@ -27,7 +27,7 @@ All GET requests include pagination as well as ways to filter based on the field
     * PUT: Update the post.
     * DELETE: Delete the post
 
-/post/<postid>/comments
+/post/<postid>/comment
     * GET: Get the comments related to postid.
     * POST: Add a new comment.
 
