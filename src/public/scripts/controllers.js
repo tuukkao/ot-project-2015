@@ -96,11 +96,10 @@ angular.module('app')
     });
     $scope.addComment = function(post) {
         console.log(post);
-        var blogId = post.parent_blog;
         var postId = post._id;
         var comment = post.newComment;
         var author = $scope.currentUser;
-        Comment.addComment(blogId, postId, comment, author)
+        Comment.addComment(postId, comment, author)
             .success(function(data) {
                 console.log(data);
                 fetchPosts();
