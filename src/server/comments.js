@@ -2,14 +2,14 @@ var mongoose = require("mongoose");
 var Post = require("./models/post");
 
 exports.getCommentsForPost = function(request, response) {
-    Post.findOne({'parent_blog': request.params.blogid, '_id': request.params.postid}, 'comments', function(err, post) {
+    Post.findOne({'_id': request.params.postid}, 'comments', function(err, post) {
         if (err) return response.send(err);
         response.json(post.comments);
     });
 };
 
 exports.addCommentToPost = function(request, response) {
-    Post.findOne({'parent_blog': request.params.blogid, '_id': request.params.postid}, 'comments', function (err, post) {
+    Post.findOne({'_id': request.params.postid}, 'comments', function (err, post) {
         if (err) return request.send(err);
         post.comments.addToSet(request.body);
         post.save(function(err) {
@@ -20,7 +20,7 @@ exports.addCommentToPost = function(request, response) {
 };
 
 exports.getComment = function(request, response) {
-    Post.findOne({'parent_blog': request.params.blogid, '_id': request.params.postid}, 'comments', function(err, post) {
+    Post.findOne({'_id': request.params.postid}, 'comments', function(err, post) {
         if(err) return response.send(err);
         comment = post.comments.id(request.params.commentid);
 
@@ -38,7 +38,7 @@ exports.updateComment = function(request, response) {
         set['comments.$.' + key] = request.body[key];
     }
 
-    Post.update({'parent_blog': request.params.blogid, '_id': request.params.postid,
+    Post.update({'_id': request.params.postid,
     'comments._id': request.params.commentid, 'comments.author': request.user_id},
     {'$set': set }, function(err) {
         if (err) return response.send(err);
@@ -47,7 +47,7 @@ exports.updateComment = function(request, response) {
 };
 
 exports.deleteComment = function(request, response) {
-    Post.findOne({'parent_blog': request.params.blogid, '_id': request.params.postid}, 'comments', function(err, post) {
+    Post.findOne({'_id': request.params.postid}, 'comments', function(err, post) {
         if(err) return response.send(err);
         comment = post.comments.id(request.params.commentid);
         // Not sure if this even works !!
