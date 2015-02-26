@@ -5,7 +5,10 @@ angular.module('app')
 
 .factory('Posts', ['$http', 'ENV', function($http, ENV) {
     return {
-        fetchPosts: function(blogId) {
+        fetchPosts: function() {
+            return $http.get(ENV.apiEndpoint + '/post');
+        },
+        fetchPostsForBlog: function() {
             return $http.get(ENV.apiEndpoint + '/post?blogid=' + blogId,
             { blogid: blogId});
         }
