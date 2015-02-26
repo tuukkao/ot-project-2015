@@ -4,7 +4,7 @@ var User = require('./models/user');
 
 exports.getBlogs = function(request, response) {
     Blog.find()
-    .populate('author', '-blogs')
+    .populate('author', '_id display_name profile_picture')
     .skip(request.query.limit *(request.query.page -1)).limit(request.query.limit)
     .exec(function(err, blogs) {
         if (err) return response.send(err);
@@ -15,7 +15,7 @@ exports.getBlogs = function(request, response) {
 // Get specific user's blogs.
 exports.getBlogsForUser = function(request, response) {
     Blog.find({ 'author': request.params.userid })
-    .populate('author', '-blogs')
+    .populate('author', '_id display_name profile_picture')
     .skip(request.query.limit *(request.query.page -1)).limit(request.query.limit)
     .exec(function(err, blogs) {
         if (err) return response.send(err);
