@@ -1,12 +1,12 @@
 angular.module('app')
 .factory('Blogs', ['$http', 'ENV', function($http, ENV) {
-    return $http.get(ENV.apiEndpoint + '/blogs');
+    return $http.get(ENV.apiEndpoint + '/blog');
 }])
 
 .factory('Posts', ['$http', 'ENV', function($http, ENV) {
     return {
         fetchPosts: function(blogId) {
-            return $http.get(ENV.apiEndpoint + '/blog/'+blogId+'/posts',
+            return $http.get(ENV.apiEndpoint + '/post?blogid=' + blogId,
             { blogid: blogId});
         }
     }
@@ -15,26 +15,26 @@ angular.module('app')
 .factory('UserFeed', ['$http', 'ENV', function($http, ENV) {
     return {
         getBlogs: function(userId) {
-            return $http.get(ENV.apiEndpoint + '/blogs/'+userId);
+            return $http.get(ENV.apiEndpoint + '/blog/'+userId);
         }
     }
 }])
 
 .factory('Comment', ['$http', 'ENV', 'Session', function($http, ENV, Session) {
     return {
-        getComments : function(blogId, postId) {
-            return $http.get(ENV.apiEndpoint + '/blog/'+blogId+'/post/'+postId+'/comments');
+        getComments : function(postId) {
+            return $http.get(ENV.apiEndpoint + '/post/'+postId+'/comment');
         },
-        addComment : function(blogId, postId, comment, author) {
-            return $http.post(ENV.apiEndpoint + '/blog/'+blogId+'/post/'+postId+'/comments',
+        addComment : function(postId, comment, author) {
+            return $http.post(ENV.apiEndpoint + '/post/'+postId+'/comment',
             { comment: comment, author: author });
         },
-        updateComment : function(blogId, postId, comment) {
-            return $http.put(ENV.apiEndpoint + '/blog/'+blogId+'/post/'+postId+'/comments/'+commentId,
+        updateComment : function(postId, comment) {
+            return $http.put(ENV.apiEndpoint + '/post/'+postId+'/comment/'+commentId,
             { comment: comment });
         },
-        deleteComment : function(blogId, postId, commentId) {
-            return $http.delete(ENV.apiEndpoint + '/blog/'+blogId+'/post/'+postId+'/comments/'+commentId);
+        deleteComment : function(postId, commentId) {
+            return $http.delete(ENV.apiEndpoint + '/post/'+postId+'/comment/'+commentId);
         }
     }
 }])

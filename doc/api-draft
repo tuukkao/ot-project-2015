@@ -1,6 +1,6 @@
 All GET requests include pagination as well as ways to filter based on the fields of the data model.
 
-/users
+/user
     * POST: create new user
     * GET: get a list of users.
 
@@ -9,7 +9,7 @@ All GET requests include pagination as well as ways to filter based on the field
     * PUT: update profile information
     * DELETE: Remove the user and all the associated content
 
-/blogs
+/blog
     * GET: Get a list of blogs with optional filtering.
     * POST: Add a new blog.
 
@@ -17,20 +17,21 @@ All GET requests include pagination as well as ways to filter based on the field
     * put: Update blog information
     * DELETE: Remove blog
 
-/blog/<blogid>/posts
-    * GET: Get a list of the blog's posts.
+/post
+    * GET: Get a time-sorted list of all the posts in the service.
+      - parameters: blogid
     * POST: Add a new post
 
-/blog/<blogid>/post/<postid>
+/post/<postid>
     * GET: Get the post content.
     * PUT: Update the post.
     * DELETE: Delete the post
 
-/blog/<blogid>/post/<blogid>/comments
+/post/<postid>/comment
     * GET: Get the comments related to postid.
     * POST: Add a new comment.
 
-/blog/<blogid>/post/<postid>/comment/<commentid>
+/post/<postid>/comment/<commentid>
     * GET: Get the comment data
     * PUT: Modify comment
     * DELETE: Delete comment

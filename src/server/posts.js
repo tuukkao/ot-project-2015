@@ -2,14 +2,15 @@ var mongoose = require("mongoose");
 var Post = require("./models/post");
 var Blog = require("./models/blog");
 
-exports.getPostsForBlog = function(request, response) {
-    Post.find({'parent_blog': request.params.blogid}, function(err, posts) {
+exports.getPosts = function(request, response) {
+    Post.find({'parent_blog': request.params.blogid}, "-comments",
+              { sort: { created_at: -1 }}, function(err, posts) {
         if (err) response.send(err);
         response.json(posts);
     });
 };
 
-exports.addPostToBlog = function(request, response) {
+exports.addPost = function(request, response) {
     request.body.parent_blog = request.params.blogid;
     post = new Post(request.body);
     post.save(function(err) {
@@ -31,7 +32,7 @@ exports.getPost = function(request, response) {
 };
 
 exports.updatePost = function(request, response) {
-    Post.update({'parent_blog': request.params.blogid, '_id': request.params.postid, 'parent_blog.author': request.user_id}, function(err, numRows) {
+    Post.update({'_id': request.params.postid, 'parent_blog.author': request.user_id}, function(err, numRows) {
         if (err) {
             return response.send(err);
         } else if (numRows == 0) {
@@ -43,7 +44,7 @@ exports.updatePost = function(request, response) {
 };
 
 exports.deletePost = function(request, response) {
-    Post.remove({'parent_blog': request.params.blogid, '_id': request.params.postid, 'parent_blog.author': request.user_id}, function(err) {
+    Post.remove({'_id': request.params.postid, 'parent_blog.author': request.user_id}, function(err) {
         if (err) return response.send(err);
         response.json({'message': 'Post deleted.'});
     });
