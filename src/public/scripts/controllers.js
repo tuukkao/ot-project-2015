@@ -23,35 +23,17 @@ angular.module('app')
  * FeedController will take care of getting the right feed for the user.
  *
  */
-.controller('feedController', ['$scope', 'Blogs', 'Posts', function ($scope, Blogs, Posts) {
-    $scope.blogs = [];
-    Blogs.success(function(data){
+.controller('feedController', ['$scope', 'Posts', function ($scope, Posts) {
+    $scope.posts = [];
+    Posts.fetchPosts()
+    .success(function(data){
         console.log(data);
-        $scope.blogs = data;
-        console.log($scope.blogs);
-        fetchPosts();
-    }).error(function(data, status){
+        $scope.posts = data;
+        console.log($scope.posts);
+    })
+    .error(function(data, status){
         console.log(data, status);
     });
-
-    var fetchPosts = function() {
-        angular.forEach($scope.blogs, function(item) {
-            console.log(item._id);
-            if(item._id) {
-                Posts.fetchPosts(item._id)
-                .success(function(data) {
-                    if(item.posts) {
-                        item.posts = [];
-                    }
-                    item.posts = data;
-                    console.log(data);
-                })
-                .error(function(data) {
-                    console.log(data);
-                })
-            }
-        })
-    }
 }])
 
 
