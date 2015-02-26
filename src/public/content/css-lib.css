@@ -1,0 +1,71 @@
+/* This is a all around CSS library focused for responsive elements.
+    @Author			: Pyry Nikunen <pyry.nikunen@gmail.com>
+    @Last Update	: 2015-02-23
+*/
+
+
+/* Input and Form classes */
+.login-form {
+    display: inline-block;
+    width: 100%;
+    min-width: auto;
+}
+
+.login-form input, .form-fields input {
+    padding: 5px 5px 5px 5px;
+    border: 1px solid black;
+    border-radius: 5px 5px 5px 5px;
+}
+
+.login-form input:focus, button:focus, .form-fields input:focus, button:focus {
+    box-shadow: inset 0 0 5px green, 0 0 5px green;
+}
+
+.login-form button, input[type='submit'], .form-fields button, input[type='submit'] {
+    padding: 5px 5px 5px 5px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 7px 7px 7px 7px;
+}
+
+.form-fields {
+
+}
+
+.horizontal-navigation {
+    width: 100%;
+    height: auto;
+    padding-top: 10px;
+}
+.horizontal-navigation ul {
+    display: inline;
+    padding: 0;
+    margin : 0;
+    width: 100%;
+}
+.horizontal-navigation li, a {
+    display: inline-block;
+    padding: 0;
+    margin : 0;
+}
+.horizontal-navigation a {
+    display: inline-block;
+    padding: 0px 10px 0px 10px;
+    margin : 0;
+    width  : 100%;
+    text-align: center;
+}
+
+
+@media all and (min-width: 320px) and (max-width: 480px) {
+
+}
+@media all and (min-width: 481px) and (max-width: 640px) {
+
+}
+@media all and (min-width: 641px) and (max-width: 960px) {
+
+}
+@media all and (max-width: 961px) {
+
+}

@@ -26,10 +26,8 @@ div, ul, li, a {
     height: 44px;
     font-size: 24px;
     margin: 0px 0px 0px 0px;
-    padding-left: 2%;
-    padding-right: 2%;
     padding-top: 10px;
-    width: 96%;
+    width: 100%;
     min-width: 540px;
     position: fixed;
     top: 0px;

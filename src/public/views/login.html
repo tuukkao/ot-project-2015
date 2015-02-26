@@ -1,7 +1,10 @@
 <div class="login-template" ng-controller="loginController">
+    <div class="login-form">
     <form name="loginFrom" ng-submit="login(credentials)" novalidate>
     <input type="text" ng-model="credentials.username" id="username" placeholder="User Name" required />
     <input type="password" ng-model="credentials.password" id="password" placeholder="Password" required />
     <input type="submit" value="Log In"/>
     </from>
+    <button type="button">Sign Up</button>
+    </div>
 </div>
