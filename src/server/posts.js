@@ -4,7 +4,10 @@ var Blog = require("./models/blog");
 
 exports.getPosts = function(request, response) {
     Post.find({'parent_blog': request.params.blogid}, "-comments", 
-              { sort: { created_at: -1 }}, function(err, posts) {
+              { sort: { created_at: -1 }})
+
+    .skip(request.query.limit *(request.query.page -1)).limit(request.query.limit)
+    .exec(function(err, posts) {
         if (err) response.send(err);
         response.json(posts);
     });

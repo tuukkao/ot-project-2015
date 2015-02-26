@@ -1,9 +1,12 @@
 module.exports = function(app){
+    var paginate = require("express-paginate");
     var blogs = require("./blogs");
     var users = require("./users");
     var posts = require("./posts");
     var comments = require("./comments");
     var authorize = require("./auth");
+
+    app.use(paginate.middleware(10, 50));
 
     app.post('/login', authorize.authenticate);
 
