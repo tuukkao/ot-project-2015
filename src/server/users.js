@@ -5,7 +5,9 @@ var jwt = require('jsonwebtoken');
 var config = require('./config');
 
 exports.getUsers = function (request, response) {
-    User.find().populate('blogs').exec(function (err, users) {
+    User.find().populate('blogs')
+    .skip(request.query.limit *(request.query.page -1)).limit(request.query.limit)
+    .exec(function (err, users) {
         if (err) return response.send(err);
         var userInfos = [ ];
         users.forEach(function(user) {

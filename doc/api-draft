@@ -1,4 +1,7 @@
 All GET requests include pagination as well as ways to filter based on the fields of the data model.
+The following query string fields are available for pagination:
+    * page: The page to fetch. Defaults to 1.
+    * limit: The number of objects to fetch. Defaults to 10.
 
 /user
     * POST: create new user
