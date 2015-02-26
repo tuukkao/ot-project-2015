@@ -46,6 +46,15 @@ angular.module('app')
     return {
         getUser: function(userId) {
             return $http.get(ENV.apiEndpoint + '/user/'+userId, { userid: userId });
+        },
+        registerUser: function(user) {
+            return $http.post(ENV.apiEndpoint + '/user/', {
+                username    : user.username,
+                password    : user.password,
+                email       : user.email,
+                display_name: user.display_name,
+                description : user.description
+            });
         }
     }
 }])

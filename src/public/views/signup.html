@@ -1,3 +1,15 @@
 <div ng-controller="signupController">
-    {{ message }}
+    <form ng-submit="signUp(user)">
+        <label for="username">Login name</label> <br />
+        <input type="text" name="username" ng-model="user.username" value="" required /> <br />
+        <label for="password">Password</label> <br />
+        <input type="password" name="password" ng-model="user.password" value="" required /> <br />
+        <label for="email">Email</label> <br />
+        <input type="text" name="email" ng-model="user.email" value="" required /> <br />
+        <label for="displayname">Display Name</label> <br />
+        <input type="text" name="display_name" ng-model="user.display_name" value="" required /> <br />
+        <label for="description">Description</label> <br />
+        <input type="textarea" name="description" ng-model="user.description" value=""> <br />
+        <input type="submit" value="Sign Up!" />
+    </from>
 </div>

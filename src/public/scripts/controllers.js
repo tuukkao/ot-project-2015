@@ -134,8 +134,30 @@ angular.module('app')
  *
  *
  */
-.controller('signupController', ['$scope', function($scope) {
-    $scope.message = "signup";
+.controller('signupController', ['$scope', 'User', function($scope, User) {
+    $scope.user = {
+        username : '',
+        password : '',
+        email : '',
+        display_name : '',
+        description : ''
+    };
+    $scope.signUp = function(user) {
+        User.registerUser(user)
+        .success(function(data) {
+            console.log(data);
+            $scope.user = {
+                username : '',
+                password : '',
+                email : '',
+                display_name : '',
+                description : ''
+            };
+        })
+        .error(function(data, status) {
+            console.log(data, status);
+        });
+    }
 }])
 
 
