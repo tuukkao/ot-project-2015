@@ -15,6 +15,7 @@ The /blog, /post and /user get requests can be paginated.
 
 /blog
     * GET: Get a list of blogs with optional filtering.
+      - filter parameters: author, created_at
     * POST: Add a new blog.
 
 /blog/<blogid>

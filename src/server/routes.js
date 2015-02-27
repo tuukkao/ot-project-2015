@@ -11,7 +11,6 @@ module.exports = function(app){
     app.post('/login', authorize.authenticate);
 
     app.get('/blog', blogs.getBlogs);
-    app.get('/blog/:userid', blogs.getBlogsForUser);
 
     app.post('/blog', authorize.confirmAuth, blogs.addBlog);
 
