@@ -1,6 +1,30 @@
-<div class="navigation-template">
-    <ul class="nav-list nav">
-        <li><a href='#'>Blogs</a></li>
-        <li><a href='#about'>About</a></li>
-    </ul>
+<div class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+                <img alt="Brand" src="/images/logo.png">
+            </a>
+        </div>
+        <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href='#'>Blogs</a></li>
+                <li><a href='#about'>About</a></li>
+            </ul>
+            <a href="#signup" class="btn btn-default navbar-btn navbar-right">Sign Up</a>
+            <form ng-controller="loginController" class="navbar-form navbar-right" role="login" name="loginFrom" ng-submit="login(credentials)" novalidate style="padding-right: 3px;">
+                <div class="form-group">
+                    <input class="form-control" type="text" ng-model="credentials.username" id="username" placeholder="User Name" required />
+                    <input class="form-control" type="password" ng-model="credentials.password" id="password" placeholder="Password" required />
+                    <input type="submit" value="Log In" class="btn btn-default"/>
+                </div>
+            </form>
+
+        </div>
+    </div>
 </div>

@@ -118,7 +118,7 @@ angular.module('app')
  *
  *
  */
-.controller('profileController', ['$scope', 'User', function($scope, User) {
+.controller('profileController', ['$scope', 'User', 'Session', function($scope, User, Session) {
     $scope.message = "profile";
     $scope.user = [];
 
@@ -131,6 +131,13 @@ angular.module('app')
     .error(function(data, status){
         console.log(data, status);
     });
+    $scope.logOut = function() {
+        console.log("log out");
+        Session.destroy();
+        user = { currentUser : null,
+                token : null };
+        $scope.setCurrentUser(user) ;
+    }
 }])
 
 /**
