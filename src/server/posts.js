@@ -3,7 +3,13 @@ var Post = require("./models/post");
 var Blog = require("./models/blog");
 
 exports.getPosts = function(request, response) {
-    Post.find({'parent_blog': request.params.blogid}, "-comments", 
+    filters = {};
+    if (!request.query.parent_blog) filters.parent_blog = request.query.parent_blog;
+    if (request.query.author) filters.author = request.query.author;
+    if (request.query.created_at) filters.created_at = request.query.created_at;
+    if (request.query.modified_At) filters.modified_At = request.query.modified_at;
+    
+    Post.find(filters, "-comments", 
               { sort: { created_at: -1 }})
     .skip(request.query.limit *(request.query.page -1)).limit(request.query.limit)
     .exec(function(err, posts) {

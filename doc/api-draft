@@ -2,6 +2,7 @@ All GET requests include pagination as well as ways to filter based on the field
 The following query string fields are available for pagination:
     * page: The page to fetch. Defaults to 1.
     * limit: The number of objects to fetch. Defaults to 10.
+The /blog, /post and /user get requests can be paginated.
 
 /user
     * POST: create new user
@@ -22,7 +23,7 @@ The following query string fields are available for pagination:
 
 /post
     * GET: Get a time-sorted list of all the posts in the service.
-      - parameters: blogid
+      - filter parameters: parent_blog, author, created_at, modified_At
     * POST: Add a new post
 
 /post/<postid>
