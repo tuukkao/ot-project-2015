@@ -60,6 +60,23 @@ angular.module('app')
     }
 }])
 
+.controller('commentController', ['$scope', 'Comment',
+            function($scope, Comment) {
+
+    $scope.addComment = function(post) {
+        console.log(post);
+        var postId = post._id;
+        var comment = post.newComment;
+        var author = $scope.currentUser;
+        Comment.addComment(postId, comment, author)
+            .success(function(data) {
+                console.log(data);
+            })
+            .error(function(data) {
+                console.log(data);
+            });
+    }
+}])
 /**
  *
  *
@@ -76,20 +93,6 @@ angular.module('app')
     .error(function(data, status) {
         console.log(data, status);
     });
-    $scope.addComment = function(post) {
-        console.log(post);
-        var postId = post._id;
-        var comment = post.newComment;
-        var author = $scope.currentUser;
-        Comment.addComment(postId, comment, author)
-            .success(function(data) {
-                console.log(data);
-                fetchPosts();
-            })
-            .error(function(data) {
-                console.log(data);
-            });
-    }
 
     var fetchPosts = function() {
         angular.forEach($scope.blogs, function(item) {

@@ -14,7 +14,7 @@
                     <p><i>{{ post.created_at }}</i> {{ blog.author.display_name }}</p>
                     <p>Tags: <span ng-repeat="tag in post.tags">{{ tag }} </span></p>
                 </div>
-                <div class="comment-container">
+                <div class="comment-container" ng-controller="commentController">
                     <h4>Comments:</h4>
                     <div class="comments" ng-repeat="comment in post.comments">
                         <div class="comment" data-id="{{ comment_id }}">
