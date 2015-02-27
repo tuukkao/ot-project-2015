@@ -1,4 +1,8 @@
 All GET requests include pagination as well as ways to filter based on the fields of the data model.
+The following query string fields are available for pagination:
+    * page: The page to fetch. Defaults to 1.
+    * limit: The number of objects to fetch. Defaults to 10.
+The /blog, /post and /user get requests can be paginated.
 
 /user
     * POST: create new user
@@ -11,6 +15,7 @@ All GET requests include pagination as well as ways to filter based on the field
 
 /blog
     * GET: Get a list of blogs with optional filtering.
+      - filter parameters: author, created_at
     * POST: Add a new blog.
 
 /blog/<blogid>
@@ -19,7 +24,7 @@ All GET requests include pagination as well as ways to filter based on the field
 
 /post
     * GET: Get a time-sorted list of all the posts in the service.
-      - parameters: blogid
+      - filter parameters: parent_blog, author, created_at, modified_At
     * POST: Add a new post
 
 /post/<postid>
