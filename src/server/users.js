@@ -5,20 +5,12 @@ var jwt = require('jsonwebtoken');
 var config = require('./config');
 
 exports.getUsers = function (request, response) {
-    User.find().populate('blogs').exec(function (err, users) {
+    User.find({}, "-_id -__v -username -password -token")
+    .populate('blogs')
+    .skip(request.query.limit *(request.query.page -1)).limit(request.query.limit)
+    .exec(function (err, users) {
         if (err) return response.send(err);
-        var userInfos = [ ];
-        users.forEach(function(user) {
-            userInfos.push({
-                display_name: user.display_name,
-                description: user.description,
-                created_at: user.created_at,
-                blogs: user.blogs,
-                blogs_followed: user.blogs_followed,
-                profile_picture: config.img_dump_path + user.profile_picture
-            });
-        });
-        response.json(userInfos);
+        response.json(users);
     });
 }
 

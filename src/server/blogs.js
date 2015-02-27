@@ -3,23 +3,18 @@ var Blog = require("./models/blog");
 var User = require('./models/user');
 
 exports.getBlogs = function(request, response) {
-    Blog.find()
-    .populate('author', '-blogs')
+    filters = {};
+    if (request.query.author) filters.author = request.query.author;
+    if (request.query.created_at) filters.created_at = request.query.created_at;
+    
+    Blog.find(filters)
+    .populate('author', '_id display_name profile_picture')
+    .skip(request.query.limit *(request.query.page -1)).limit(request.query.limit)
     .exec(function(err, blogs) {
         if (err) return response.send(err);
         response.json(blogs);
     });
 };
-
-// Get specific user's blogs.
-exports.getBlogsForUser = function(request, response) {
-    Blog.find({ 'author': request.params.userid })
-    .populate('author', '-blogs')
-    .exec(function(err, blogs) {
-        if (err) return response.send(err);
-        response.json(blogs);
-    })
-}
 
 exports.addBlog = function(request, response) {
     blog = new Blog(request.body);
