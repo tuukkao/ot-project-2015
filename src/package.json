@@ -12,7 +12,8 @@
         "express": "4.5.x",
         "mongoose": "3.8.x",
         "cors": "2.5.x",
-        "jsonwebtoken": "3.2.x"
+        "jsonwebtoken": "3.2.x" ,
+        "express-paginate": "^0.0.6"
     },
     "engine": "node 0.10.35"
 }

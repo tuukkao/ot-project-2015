@@ -18,7 +18,7 @@ angular.module('app')
 .factory('UserFeed', ['$http', 'ENV', function($http, ENV) {
     return {
         getBlogs: function(userId) {
-            return $http.get(ENV.apiEndpoint + '/blog/'+userId);
+            return $http.get(ENV.apiEndpoint + '/blog/?author='+userId);
         }
     }
 }])
