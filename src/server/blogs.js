@@ -20,6 +20,12 @@ exports.addBlog = function(request, response) {
     blog = new Blog(request.body);
     blog.save(function(err) {
         if (err) return response.send(err);
+        User.findOne({"_id": request.body.author}, function(err, user) {
+            user.blogs.push(blog._id);
+            user.save(function(err) {
+                if (err) return response.send(err);
+            });
+        });
         response.json({'message': 'Blog added'});
     });
 };
