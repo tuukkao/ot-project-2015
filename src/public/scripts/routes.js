@@ -8,10 +8,34 @@ angular.module('app')
             controller: 'feedController'
         })
 
+        // Posts for specific blog
+        .when('/feed/:blogid', {
+            templateUrl: 'views/feed.html',
+            controller: 'feedController'
+        })
+
         // Route for user's blogs
         .when('/blogs', {
             templateUrl : 'views/blogs.html',
             controller  : 'blogController'
+        })
+
+        // Add new blog
+        .when('/upsertblog', {
+            templateUrl : 'views/upsertblog.html',
+            controller  : 'blogController'
+        })
+
+        // Modify/Update a blog
+        .when('/upsertblog/:blogid', {
+            templateUrl : 'views/upsertblog.html',
+            controller  : 'blogController'
+        })
+
+        // New post
+        .when('/post/:blogid', {
+            templateUrl : 'views/post.html',
+            controller  : 'postController'
         })
 
         // Route for user's profile

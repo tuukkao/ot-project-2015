@@ -45,3 +45,13 @@ p
 {
     word-wrap: break-word;
 }
+
+.save-btn {
+    float: right;
+    margin-right: 15px;
+}
+
+.right-float {
+    float: right;
+    margin-right: 15px;
+}

@@ -4,9 +4,10 @@ var User = require('./models/user');
 
 exports.getBlogs = function(request, response) {
     filters = {};
+    if (request.query._id) filters._id = request.query._id;
     if (request.query.author) filters.author = request.query.author;
     if (request.query.created_at) filters.created_at = request.query.created_at;
-    
+
     Blog.find(filters)
     .populate('author', '_id display_name profile_picture')
     .skip(request.query.limit *(request.query.page -1)).limit(request.query.limit)
@@ -31,7 +32,7 @@ exports.addBlog = function(request, response) {
 };
 
 exports.updateBlog = function(request, response) {
-    console.log(request.user_id);
+    console.log(request.body);
     Blog.update({'_id': request.params.blogid, 'author': request.user_id}, request.body, function(err, numRows) {
         if (err) {
             return response.send(err);

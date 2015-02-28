@@ -11,16 +11,24 @@ exports.getPosts = function(request, response) {
     Post.find(filters, "-comments",
               { sort: { created_at: -1 }})
     .skip(request.query.limit *(request.query.page -1)).limit(request.query.limit)
-    .populate('parent_blog', '_id author title tags')
+    .populate({
+        path    : 'parent_blog',
+        select  : '_id title tags',
+        model   : 'Blog'
+        })
+    .populate({
+        path    : 'author',
+        select  : '_id display_name profile_picture',
+        model   : 'User'
+        })
     .exec(function(err, posts) {
         if (err) response.send(err);
-        console.log(posts);
-
         response.json(posts);
     });
 };
 
 exports.addPost = function(request, response) {
+    console.log("adding post");
     request.body.parent_blog = request.params.blogid;
     post = new Post(request.body);
     post.save(function(err) {
@@ -42,7 +50,7 @@ exports.getPost = function(request, response) {
 };
 
 exports.updatePost = function(request, response) {
-    Post.update({'_id': request.params.postid, 'parent_blog.author': request.user_id}, function(err, numRows) {
+    Post.update({'_id': request.params.postid/*, 'parent_blog.author': request.user_id*/}, function(err, numRows) {
         if (err) {
             return response.send(err);
         } else if (numRows == 0) {

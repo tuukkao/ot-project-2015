@@ -1,6 +1,37 @@
 angular.module('app')
 .factory('Blogs', ['$http', 'ENV', function($http, ENV) {
-    return $http.get(ENV.apiEndpoint + '/blog');
+    return {
+        fetchBlogs: function() {
+            return $http.get(ENV.apiEndpoint + '/blog');
+        },
+        fetchBlogsForUser: function(author) {
+            return $http.get(ENV.apiEndpoint + '/blog?author='+author);
+        },
+        fetchBlogById: function(blogId) {
+            return $http.get(ENV.apiEndpoint + '/blog?_id='+blogId);
+        },
+        addBlog: function(blog) {
+            return $http.post(ENV.apiEndpoint + '/blog',
+            {
+                title: blog.title,
+                description: blog.description,
+                tags: blog.tags,
+                author: blog.author
+            });
+        },
+        updateBlog: function(blog) {
+            return $http.put(ENV.apiEndpoint + '/blog/' + blog._id,
+            {
+                title: blog.title,
+                description: blog.description,
+                tags: blog.tags,
+                author: blog.author
+            });
+        },
+        removeBlog: function(blogId) {
+            return $http.delete(ENV.apiEndpoint + '/blog/' + blogId)
+        }
+    }
 }])
 
 .factory('Posts', ['$http', 'ENV', function($http, ENV) {
@@ -8,9 +39,18 @@ angular.module('app')
         fetchPosts: function() {
             return $http.get(ENV.apiEndpoint + '/post');
         },
-        fetchPostsForBlog: function() {
+        fetchPostsForBlog: function(blogId) {
             return $http.get(ENV.apiEndpoint + '/post?blogid=' + blogId,
             { blogid: blogId});
+        },
+        addPost: function(post) {
+            return $http.post(ENV.apiEndpoint + '/post', {
+                title: post.title,
+                content: post.content,
+                tags: post.tags,
+                parent_blog: post.parent_blog,
+                author: post.author,
+            });
         }
     }
 }])

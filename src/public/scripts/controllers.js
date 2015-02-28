@@ -22,20 +22,41 @@ angular.module('app')
 .controller('indexController', ['$scope', function($scope) {
     $scope.message = "INDEX";
 }])
+
 /**
  * FeedController will take care of getting the right feed for the user.
  *
  */
-.controller('feedController', ['$scope', 'Posts', 'Comment',
-            function ($scope, Posts, Comment) {
+.controller('feedController', ['$scope', 'Posts', 'Comment', '$routeParams',
+            function ($scope, Posts, Comment, $routeParams) {
     $scope.posts = [];
-    Posts.fetchPosts()
-    .success(function(data){
-        $scope.posts = data;
-    })
-    .error(function(data, status){
-        console.log(data, status);
-    });
+
+    $scope.getPostsForBlog = function(blogId) {
+        Posts.fetchPostsForBlog(blogId)
+        .success(function(data) {
+            $scope.posts = data;
+        })
+        .error(function(data) {
+            console.log(data);
+        });
+    };
+
+    $scope.getPosts = function() {
+        Posts.fetchPosts()
+        .success(function(data) {
+            $scope.posts = data;
+        })
+        .error(function(data) {
+            console.log(data);
+        });
+    }
+
+    if(!$routeParams.blogid) {
+        $scope.getPosts();
+    } else {
+        $scope.getPostsForBlog($routeParams.blogid);
+    }
+
     $scope.fetchCommentsForPost = function(post) {
         console.log(post);
         post.comments = {};
@@ -97,36 +118,96 @@ angular.module('app')
  *
  *
  */
-.controller('blogController', ['$scope', 'UserFeed', 'Posts', 'Comment',
-            function($scope, UserFeed, Posts, Comment) {
+.controller('blogController', ['$scope', 'Blogs', '$location', '$routeParams',
+            function($scope, Blogs, $location, $routeParams) {
+    // initializing stuff.
     $scope.blogs = [];
+    $scope.tag = "";
 
-    UserFeed.getBlogs($scope.currentUser)
-    .success(function(data) {
+    // if there is no route parameter initialize "empty" blog entry
+    if(!$routeParams.blogid) {
+        $scope.blog = {
+            title: "",
+            tags : [],
+            description : "",
+            _id : null,
+            author : $scope.currentUser
+        }
+    } else {
+        Blogs.fetchBlogById($routeParams.blogid)
+        .success(function (data) {
+            $scope.blog = data[0];
+        })
+        .error(function (data) {
+        });
+    }
+
+    // Get blogs for user!
+    Blogs.fetchBlogsForUser($scope.currentUser)
+    .success(function (data) {
         $scope.blogs = data;
-        fetchPosts();
+        console.log($scope.blogs);
     })
-    .error(function(data, status) {
-        console.log(data, status);
+    .error(function (data) {
+        console.log(data);
     });
 
-    var fetchPosts = function() {
-        angular.forEach($scope.blogs, function(item) {
-            console.log(item._id);
-            if(item._id) {
-                Posts.fetchPosts(item._id)
-                .success(function(data) {
-                    if(item.posts) {
-                        item.posts = [];
-                    }
-                    item.posts = data;
-                    console.log(data);
-                })
-                .error(function(data) {
-                    console.log(data);
-                })
-            }
+    $scope.addTag = function(tag) {
+        $scope.blog.tags.push(tag);
+    }
+
+    $scope.saveBlog = function(blog) {
+        if($scope.blog._id) {
+            blog.author = $scope.currentUser;
+            Blogs.updateBlog(blog)
+            .success(function(data) {
+                console.log(data);
+                // trigger success=?
+                $location.path("/blogs");
+            })
+            .error(function(data) {
+                console.log(data);
+                // triggerr Error!
+            });
+        } else {
+            Blogs.addBlog(blog)
+            .success(function(data) {
+                console.log(data);
+                // trigger success=?
+                $location.path("/blogs");
+            })
+            .error(function(data) {
+                console.log(data);
+                // triggerr Error!
+            });
+        }
+    }
+
+    $scope.newPost = function(blogId) {
+        $location.path("/post/"+blogId);
+    }
+}])
+
+.controller('postController', ['$scope', 'Posts', '$location', '$routeParams',
+            function($scope, Posts, $location, $routeParams) {
+    $scope.post = {
+        title: "",
+        content: "",
+        tags: [],
+        parent_blog: $routeParams.blogid,
+        author: $scope.currentUser
+    };
+
+    $scope.addPost = function(post) {
+        console.log(post);
+        Posts.addPost(post)
+        .success(function(data) {
+            console.log(data);
+            $location.path("/feed/"+$routeParams.blogid);
         })
+        .error(function(data) {
+            console.log(data);
+        });
     }
 }])
 
