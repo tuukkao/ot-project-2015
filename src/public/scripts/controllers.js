@@ -3,16 +3,22 @@ angular.module('app')
  * MainController will take care that the right stuff is shown at right time.
  *
  */
-.controller('appController', function($scope, USER_ROLES, Authorization) {
-    console.log($scope.currentUser);
-    $scope.userRoles = USER_ROLES;
-    $scope.isAuthenticated = Authorization.isAuthenticated();
-    $scope.currentUser = null;
+.controller('appController', function($scope, USER_ROLES, Authorization, $localStorage, $http) {
     $scope.setCurrentUser = function (user) {
         $scope.currentUser = user._id;
         $scope.token = user.token;
         $scope.isAuthenticated = Authorization.isAuthenticated();
+        $http.defaults.headers.common.Authorization = user.token;
     };
+
+    if($localStorage.user) {
+        $scope.setCurrentUser($localStorage.user);
+    } else {
+        $scope.currentUser = null;
+    }
+    console.log($scope.currentUser);
+    $scope.userRoles = USER_ROLES;
+    $scope.isAuthenticated = Authorization.isAuthenticated();
 })
 .controller('indexController', ['$scope', function($scope) {
     $scope.message = "INDEX";
@@ -42,16 +48,17 @@ angular.module('app')
  *
  */
 .controller('loginController', ['$scope', '$rootScope','Authorization', 'AUTH_EVENTS',
-            function($scope, $rootScope, Authorization, AUTH_EVENTS) {
+            'Session', function($scope, $rootScope, Authorization, AUTH_EVENTS, Session) {
     $scope.credentials = {
         username : '',
         password : ''
         };
     $scope.login = function(credentials) {
         var success = function(data) {
-            console.log(data);
+            Session.create(data._id, null, data.token, function(data) {
+                $scope.setCurrentUser(data);
+            });
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-            $scope.setCurrentUser(data);
         };
         var error =  function() {
             $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
@@ -118,7 +125,8 @@ angular.module('app')
  *
  *
  */
-.controller('profileController', ['$scope', 'User', 'Session', function($scope, User, Session) {
+.controller('profileController', ['$scope', 'User', 'Session', '$location',
+            function($scope, User, Session, $location) {
     $scope.message = "profile";
     $scope.user = [];
 
@@ -133,10 +141,10 @@ angular.module('app')
     });
     $scope.logOut = function() {
         console.log("log out");
-        Session.destroy();
-        user = { currentUser : null,
-                token : null };
-        $scope.setCurrentUser(user) ;
+        Session.destroy(function(data) {
+            $scope.setCurrentUser(data);
+        });
+        $location.path("/");
     }
 }])
 

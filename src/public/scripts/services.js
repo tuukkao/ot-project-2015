@@ -77,26 +77,37 @@ angular.module('app')
     };
 
     authService.isAuthenticated = function() {
-        // !! does boolean conversion so if Session has userId value, this will
+        // !! does boolean conversion so if Session has token value, this will
         // return true.
-        return !!Session.token;
+        return !!Session.getToken();
     };
 
     return authService;
 }])
 
-.service('Session',['$http', function ($http) {
-    this.create = function (userId, userRole, token) {
-        this.userId = userId;
-        this.userRole = userRole;
-        this.token = token;
-        $http.defaults.headers.common.Authorization = token;
+.service('Session',['$http', '$localStorage',function ($http, $localStorage) {
+    this.getToken = function () {
+        return $localStorage.user.token;
+    }
+    this.create = function (userId, userRole, token, callback) {
+        var user = {
+            _id: userId,
+            user_role: userRole,
+            token: token };
+        $localStorage.user = user;
+
+        if(typeof callback == 'function')
+            callback($localStorage.user);
     };
-    this.destroy = function () {
-        this.userId = null;
-        this.userRole = null;
-        this.token = null;
+    this.destroy = function (callback) {
+        $localStorage.user = {
+            _id: null,
+            user_role: null,
+            token: null };
         $http.defaults.headers.common.Authorization = null;
+
+        if(typeof callback == 'function')
+            callback($localStorage.user);
     };
     return this;
 }])

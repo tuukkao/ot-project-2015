@@ -37,5 +37,16 @@ angular.module('app')
             templateUrl : 'views/logout.html',
             controller  : 'logoutController'
         })
+
+        // Routes to view user profiles
+        .when('profile/:userid', {
+            templateUrl : 'views/profile.html',
+            controller  : 'profileController'
+        })
+
+        // Otherwise redirect to frontpage
+        .otherwise({
+            redirectTo: '/'
+        });
 }])
 ;
