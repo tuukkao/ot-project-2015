@@ -19,7 +19,7 @@
             </ul>
             <div ng-controller='profileController' class="nav navbar-nav navbar-right">
                 <span class="logout-navi user-name">{{ user.display_name }}</span>
-                <a href="#me"><img src="{{ user.profile_picture }}" alt="Profile picture" /></a>
+                <a href="#me"><img src="/images/{{ user.profile_picture }}" alt="Profile picture" /></a>
                 <button ng-click="logOut()" class="btn btn-default btn-navbar">Log Out</button>
             </div>
 

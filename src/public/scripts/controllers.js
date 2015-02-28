@@ -16,30 +16,39 @@ angular.module('app')
     } else {
         $scope.currentUser = null;
     }
-    console.log($scope.currentUser);
     $scope.userRoles = USER_ROLES;
     $scope.isAuthenticated = Authorization.isAuthenticated();
 })
 .controller('indexController', ['$scope', function($scope) {
     $scope.message = "INDEX";
-    console.log('Current user: '+$scope.currentUser);
-    console.log('Is authenticated? '+$scope.isAuthenticated);
 }])
 /**
  * FeedController will take care of getting the right feed for the user.
  *
  */
-.controller('feedController', ['$scope', 'Posts', function ($scope, Posts) {
+.controller('feedController', ['$scope', 'Posts', 'Comment',
+            function ($scope, Posts, Comment) {
     $scope.posts = [];
     Posts.fetchPosts()
     .success(function(data){
-        console.log(data);
         $scope.posts = data;
-        console.log($scope.posts);
     })
     .error(function(data, status){
         console.log(data, status);
     });
+    $scope.fetchCommentsForPost = function(post) {
+        console.log(post);
+        post.comments = {};
+        Comment.getComments(post._id)
+        .success(function(data) {
+            console.log(data);
+            post.comments = data;
+            console.log(post);
+        })
+        .error(function(data) {
+            console.log(data);
+        })
+    };
 }])
 
 

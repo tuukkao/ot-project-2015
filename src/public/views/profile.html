@@ -6,7 +6,7 @@
             <strong>Blogs followed: <br />{{ user.blogs_followed }}</strong><br />
         </div>
         <div class="profile-picture">
-            <img src="{{ user.profile_picture }}" alt="profile picture" />
+            <img src="/images/{{ user.profile_picture }}" alt="profile picture" />
             <i><br />{{ user.display_name }} joined at {{ user.created_at }}</i><br />
         </div>
     </p>

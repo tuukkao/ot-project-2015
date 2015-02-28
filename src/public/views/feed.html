@@ -1,41 +1,43 @@
 <div class="feed-template" ng-controller="feedController">
     <div class="feed">
         <div class="post-item panel panel-default" ng-repeat="post in posts">
-            <div class="post-header panel-heading" data-id="{{ post._id }}">
+            <div class="post-header panel-heading" data-id="{{ post._id }}" ng-init="post.hide = true; fetchCommentsForPost(post);" ng-click="post.hide = !post.hide">
                 <h4>{{ post.title }}</h4>
             </div>
-            <div class="post-body panel-body">
-                <p>
-                    {{ post.content }}
-                </p>
-            </div>
-            <div class="post-footer panel-footer">
-                <p><i>{{ post.created_at }}</i> {{ blog.author.display_name }}</p><br />
-                <p>Tags: <span ng-repeat="tag in post.tags">{{ tag }} </span></p>
-            </div>
-            <div class="comment-container well well-lg" ng-controller="commentController">
-                <h4>Comments:</h4>
-                <div class="comments" ng-repeat="comment in post.comments">
-                    <div class="comment" data-id="{{ comment_id }}">
-                        <img src="http://localhost/images/{{ blog.author.profile_picture }}"/>
-                        <div class="comment-body" >
-                            <p>
-                                {{ comment.comment }}
-                            </p>
-                        </div>
-                        <div class="comment-footer">
-                            <p>
-                                <i>{{ comment.created_at }}</i> {{ comment.author }}
-                            </p>
+            <div class="post-body" ng-class="{ hidden:post.hide,chaldean:!post.hide}">
+                <div class="panel-body">
+                    <p>
+                        {{ post.content }}
+                    </p>
+                </div>
+                <div class="post-footer panel-footer">
+                    <p><i>{{ post.created_at }}</i> {{ blog.author.display_name }}</p><br />
+                    <p>Tags: <span ng-repeat="tag in post.tags">{{ tag }} </span></p>
+                </div>
+                <div class="comment-container well well-lg" ng-controller="commentController">
+                    <h4>Comments:</h4>
+                    <div class="comments" ng-repeat="comment in post.comments">
+                        <div class="comment" data-id="{{ comment_id }}">
+                            <img src="/images/{{ blog.author.profile_picture }}"/>
+                            <div class="comment-body" >
+                                <p>
+                                    {{ comment.comment }}
+                                </p>
+                            </div>
+                            <div class="comment-footer">
+                                <p>
+                                    <i>{{ comment.created_at }}</i> {{ comment.author }}
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div ng-if="isAuthenticated">
-                    <div class="add-comment">
-                        <form ng-submit="addComment(post)">
-                            <input id="comment-content" type="text" ng-model="post.newComment" />
-                            <input id="submit-comment" type="submit" value="Add Comment" />
-                        </form>
+                    <div ng-if="isAuthenticated">
+                        <div class="add-comment">
+                            <form ng-submit="addComment(post)">
+                                <input id="comment-content" type="text" ng-model="post.newComment" />
+                                <input id="submit-comment" type="submit" value="Add Comment" />
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

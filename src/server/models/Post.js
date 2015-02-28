@@ -8,7 +8,7 @@ var postSchema = mongoose.Schema({
     parent_blog: { type: mongoose.Schema.Types.ObjectId, required: true },
     comments: [ {
         comment: { type: String, required: true },
-        author: { type: String, required: true},
+        author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
         created_at: {type: Date, default: Date.now },
         modified_at: { type: Date, default: Date.now }
     }]
