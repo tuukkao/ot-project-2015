@@ -6,7 +6,6 @@ exports.getCommentsForPost = function(request, response) {
     .populate('comments.author', '_id display_name profile_picture')
     .exec( function(err, post) {
         if (err) return response.send(err);
-        console.log(post.comments);
         response.json(post.comments);
     });
 };

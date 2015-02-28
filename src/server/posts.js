@@ -11,8 +11,11 @@ exports.getPosts = function(request, response) {
     Post.find(filters, "-comments",
               { sort: { created_at: -1 }})
     .skip(request.query.limit *(request.query.page -1)).limit(request.query.limit)
+    .populate('parent_blog', '_id author title tags')
     .exec(function(err, posts) {
         if (err) response.send(err);
+        console.log(posts);
+
         response.json(posts);
     });
 };

@@ -8,9 +8,9 @@
     color: grey;
 }
 
-.post-header img
+.post-header img, .comment img
 {
-    max-height: 50px;
+    max-height: 40px;
 }
 
 .content
@@ -22,4 +22,26 @@
 .comment-container
 {
     margin: 10px 10px 10px 10px;
+}
+
+.comment-body
+{
+    background-color: white !important;
+}
+.comment span
+{
+    font-size: 16px;
+}
+.comment img {
+    margin-right: 10px;
+}
+
+.panel-body, .comment-body
+{
+    white-space: pre;
+}
+
+p
+{
+    word-wrap: break-word;
 }
