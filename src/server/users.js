@@ -6,7 +6,7 @@ var jwt = require('jsonwebtoken');
 var config = require('./config');
 
 exports.getUsers = function (request, response) {
-    User.find({}, "-_id -__v -username -password -token")
+    User.find({}, "-__v -username -password -token")
     .populate('blogs')
     .skip(request.query.limit *(request.query.page -1)).limit(request.query.limit)
     .exec(function (err, users) {
@@ -44,6 +44,7 @@ exports.getUser = function(request, response) {
             response.status(404).json({'message': 'Unknown user.'});
         } else {
             var userInfo = {
+                _id: user._id,
                 display_name: user.display_name,
                 description: user.description,
                 created_at: user.created_at,
@@ -57,7 +58,8 @@ exports.getUser = function(request, response) {
 };
 
 exports.updateUser = function(request, response) {
-    User.update({ '_id': request.userid }, request.body, function(err, numRows) {
+    console.log(request.user_id);
+    User.update({ '_id': request.user_id }, request.body, function(err, numRows) {
         if (err) {
             return response.send(err);
         }else if (numRows == 0) {
@@ -69,7 +71,7 @@ exports.updateUser = function(request, response) {
 };
 
 exports.deleteUser = function(request, response) {
-    User.remove({ '_id': request.userid }, function(err) {
+    User.remove({ '_id': request.user_id }, function(err) {
         if (err) return console.error(err);
     });
 };
