@@ -128,7 +128,10 @@ angular.module('app')
 
 .service('Session',['$http', '$localStorage',function ($http, $localStorage) {
     this.getToken = function () {
-        return $localStorage.user.token;
+        if(!!$localStorage.user)
+            return $localStorage.user.token;
+
+        return null;
     }
     this.create = function (userId, userRole, token, callback) {
         var user = {

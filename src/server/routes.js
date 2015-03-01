@@ -5,6 +5,7 @@ module.exports = function(app){
     var posts = require("./posts");
     var comments = require("./comments");
     var authorize = require("./auth");
+    var config = require("./config");
 
     app.use(paginate.middleware(10, 50));
 
