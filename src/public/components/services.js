@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('app.services', [])
 .factory('Blogs', ['$http', 'ENV', function($http, ENV) {
     return {
         fetchBlogs: function() {
