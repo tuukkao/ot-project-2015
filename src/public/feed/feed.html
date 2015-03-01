@@ -49,7 +49,7 @@
                         <div class="add-comment">
                             <form ng-submit="addComment(post)">
                                 <div class="form-group">
-                                    <textarea id="comment-content" class="form-control" type="text" ng-model="post.newComment" ></textarea>
+                                    <textarea id="comment-content" class="form-control" type="text" ng-model="post.newComment" required="true"></textarea>
                                     <input id="submit-comment" class="btn btn-default" type="submit" value="Add Comment" style="float:right;"/>
                                 </div>
                             </form>
