@@ -8,33 +8,33 @@ module.exports = function(app){
 
     app.use(paginate.middleware(10, 50));
 
-    app.post('/login', authorize.authenticate);
+    app.post(config.node_path+'/login', authorize.authenticate);
 
-    app.get('/blog', blogs.getBlogs);
+    app.get(config.node_path+'/blog', blogs.getBlogs);
 
-    app.post('/blog', authorize.confirmAuth, blogs.addBlog);
+    app.post(config.node_path+'/blog', authorize.confirmAuth, blogs.addBlog);
 
-    app.put('/blog/:blogid', authorize.confirmAuth, blogs.updateBlog);
-    app.delete('/blog/:blogid', authorize.confirmAuth, blogs.deleteBlog);
+    app.put(config.node_path+'/blog/:blogid', authorize.confirmAuth, blogs.updateBlog);
+    app.delete(config.node_path+'/blog/:blogid', authorize.confirmAuth, blogs.deleteBlog);
 
-    app.get('/post', posts.getPosts);
-    app.post('/post', authorize.confirmAuth, posts.addPost);
+    app.get(config.node_path+'/post', posts.getPosts);
+    app.post(config.node_path+'/post', authorize.confirmAuth, posts.addPost);
 
-    app.get('/post/:postid', posts.getPost);
-    app.put('/post/:postid', authorize.confirmAuth, posts.updatePost);
-    app.delete('/post/:postid', authorize.confirmAuth, posts.deletePost);
+    app.get(config.node_path+'/post/:postid', posts.getPost);
+    app.put(config.node_path+'/post/:postid', authorize.confirmAuth, posts.updatePost);
+    app.delete(config.node_path+'/post/:postid', authorize.confirmAuth, posts.deletePost);
 
-    app.get('/post/:postid/comment', comments.getCommentsForPost)
-    app.post('/post/:postid/comment', authorize.confirmAuth, comments.addCommentToPost);
+    app.get(config.node_path+'/post/:postid/comment', comments.getCommentsForPost)
+    app.post(config.node_path+'/post/:postid/comment', authorize.confirmAuth, comments.addCommentToPost);
 
-    app.get('/post/:postid/comment/:commentid', comments.getComment);
-    app.put('/post/:postid/comments/:commentid', authorize.confirmAuth, comments.updateComment);
-    app.delete('/post/:postid/comments/:commentid', authorize.confirmAuth, comments.deleteComment);
+    app.get(config.node_path+'/post/:postid/comment/:commentid', comments.getComment);
+    app.put(config.node_path+'/post/:postid/comments/:commentid', authorize.confirmAuth, comments.updateComment);
+    app.delete(config.node_path+'/post/:postid/comments/:commentid', authorize.confirmAuth, comments.deleteComment);
 
-    app.get('/user', users.getUsers);
-    app.post('/user', authorize.register, users.addUser);
+    app.get(config.node_path+'/user', users.getUsers);
+    app.post(config.node_path+'/user', authorize.register, users.addUser);
 
-    app.get('/user/:userid', users.getUser);
-    app.put('/user/:userid', authorize.confirmAuth, users.updateUser);
-    app.delete('/user/:userid', authorize.confirmAuth, users.deleteUser);
+    app.get(config.node_path+'/user/:userid', users.getUser);
+    app.put(config.node_path+'/user/:userid', authorize.confirmAuth, users.updateUser);
+    app.delete(config.node_path+'/user/:userid', authorize.confirmAuth, users.deleteUser);
 }
