@@ -37,7 +37,9 @@ exports.addUser = function (request, response)
 
 exports.getUser = function(request, response) {
     User.findOne({'_id': request.params.userid})
-    .populate('blogs').exec(function (err, user) {
+    .populate('blogs')
+    .populate('blogs_followed')
+    .exec(function (err, user) {
         if (err) {
             return response.send(err);
         } else if (user == null) {
@@ -58,7 +60,6 @@ exports.getUser = function(request, response) {
 };
 
 exports.updateUser = function(request, response) {
-    console.log(request.user_id);
     User.update({ '_id': request.user_id }, request.body, function(err, numRows) {
         if (err) {
             return response.send(err);

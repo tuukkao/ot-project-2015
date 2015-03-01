@@ -218,19 +218,87 @@ angular.module('app')
  *
  */
 .controller('profileController', ['$scope', 'User', 'Session', '$location',
-            function($scope, User, Session, $location) {
-    $scope.message = "profile";
+    '$routeParams', function($scope, User, Session, $location, $routeParams) {
     $scope.user = [];
+    $scope.blogsFollowed = [];
+    $scope.enableFollow = false;
+    $scope.getUser = function() {
+        var userId = "";
+        if($routeParams.userid) {
+            userId = $routeParams.userid;
+        }
+        else {
+            userId = $scope.currentUser;
+        }
+        User.getUser(userId)
+        .success(function(data){
+            $scope.user = data;
+            if($scope.user._id != $scope.currentUser) {
+                User.getUser($scope.currentUser)
+                .success(function(data){
+                    var blogIds = [];
+                    for(var i = 0; i < data.blogs_followed.length; i++) {
+                        blogIds.push(data.blogs_followed[i]._id);
+                    }
+                    $scope.blogsFollowed = blogIds;
+                    for(var i = 0; i < $scope.user.blogs.length; i++) {
+                        if($scope.blogsFollowed.indexOf($scope.user.blogs[i]._id) == -1){
+                            $scope.user.blogs[i].followed = false;
+                        } else {
+                            $scope.user.blogs[i].followed = true;
+                        }
+                    }
+                    $scope.enableFollow = true;
+                    console.log($scope.blogsFollowed);
+                })
+                .error(function(data, status){
+                    console.log(data, status);
+                });
+            }
+        })
+        .error(function(data, status){
+            console.log(data, status);
+        });
+    }
+    // Get user!
+    $scope.getUser();
+    $scope.followBlog = function(blogId) {
+        User.getUser($scope.currentUser)
+        .success(function(data) {
+            data.blogs_followed.push(blogId);
+            User.followBlog(data)
+            .success(function(data) {
+                console.log(data);
+                $scope.getUser();
+            })
+            .error(function(data) {
+                console.log(data);
+            });
+        })
+        .error(function(data) {
+            console.log(data);
+        });
+    }
+    $scope.unfollowBlog = function(blogId) {
+        User.getUser($scope.currentUser)
+        .success(function(data) {
+            var index = data.blogs_followed.indexOf(blogId);
+            data.blogs_followed.splice(index, 1);
+            User.followBlog(data)
+            .success(function(data) {
+                console.log(data);
+                $scope.getUser();
+            })
+            .error(function(data) {
+                console.log(data);
+            });
+        })
+        .error(function(data) {
+            console.log(data);
+        });
+    }
 
-    User.getUser($scope.currentUser)
-    .success(function(data){
-        console.log(data);
-        $scope.user = data;
-        console.log($scope.user);
-    })
-    .error(function(data, status){
-        console.log(data, status);
-    });
+
     $scope.logOut = function() {
         console.log("log out");
         Session.destroy(function(data) {

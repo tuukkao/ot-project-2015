@@ -96,6 +96,11 @@ angular.module('app')
                 display_name: user.display_name,
                 description : user.description
             });
+        },
+        followBlog: function(user) {
+            return $http.put(ENV.apiEndpoint + '/user/'+user._id, {
+                    blogs_followed: user.blogs_followed
+            });
         }
     }
 }])

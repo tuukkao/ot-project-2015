@@ -63,7 +63,7 @@ angular.module('app')
         })
 
         // Routes to view user profiles
-        .when('profile/:userid', {
+        .when('/profile/:userid', {
             templateUrl : 'views/profile.html',
             controller  : 'profileController'
         })

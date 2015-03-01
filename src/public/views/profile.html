@@ -13,6 +13,10 @@
             <div class="well well-sm" ng-repeat="blog in user.blogs">
                 <a href="#feed/{{blog._id}}"><h4>{{ blog.title }}</h4></a>
                 <p class="indent"><i>{{ blog.description }}</i></p>
+                <div ng-if="$parent.enableFollow" class="row">
+                    <button class="right-float btn btn-default" ng-if='!blog.followed' ng-click="$parent.followBlog(blog._id)">Follow</button>
+                    <button class="right-float btn btn-default" ng-if='blog.followed' ng-click="$parent.unfollowBlog(blog._id)">Unfollow </button>
+                </div>
             </div>
             <h3>Blogs Followed</h3>
             <div class="well well-sm" ng-repeat="followed in user.blogs_followed">
