@@ -36,7 +36,9 @@ angular.module('app.services', [])
 
 .factory('Posts', ['$http', 'ENV', function($http, ENV) {
     return {
-        fetchPosts: function() {
+        fetchPosts: function(querystring) {
+            if(querystring)
+                return $http.get(ENV.apiEndpoint + '/post'+querystring);
             return $http.get(ENV.apiEndpoint + '/post');
         },
         fetchPostsForBlog: function(blogId) {

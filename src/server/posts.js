@@ -9,6 +9,7 @@ exports.getPosts = function(request, response) {
     if (request.query.author) filters.author = request.query.author;
     if (request.query.created_at) filters.created_at = request.query.created_at;
     if (request.query.modified_At) filters.modified_At = request.query.modified_at;
+    if (request.query.tag) filters.tags = request.query.tag;
     Post.find(filters, "-comments",
               { sort: { created_at: -1 }})
     .skip(request.query.limit *(request.query.page -1)).limit(request.query.limit)

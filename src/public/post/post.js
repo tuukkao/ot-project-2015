@@ -29,4 +29,7 @@ angular.module('app.post', ['ngRoute'])
             console.log(data);
         });
     }
+    $scope.addTag = function(tag) {
+        $scope.post.tags.push(tag);
+    }
 }])

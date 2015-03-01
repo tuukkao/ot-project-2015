@@ -12,6 +12,10 @@ angular.module('app.feed', ['ngRoute'])
         templateUrl: 'feed/feed.html',
         controller: 'feedController'
     })
+    .when('/feed/tag/:tag', {
+        templateUrl: 'feed/feed.html',
+        controller: 'feedController'
+    })
 }])
 
 /**
@@ -21,6 +25,10 @@ angular.module('app.feed', ['ngRoute'])
 .controller('feedController', ['$scope', 'Posts', 'Comment', '$routeParams',
             function ($scope, Posts, Comment, $routeParams) {
     $scope.posts = [];
+    $scope.tags = [];
+    $scope.tag = "";
+    $scope.showFilters = false;
+
 
     $scope.getPostsForBlog = function(blogId) {
         Posts.fetchPostsForBlog(blogId)
@@ -32,8 +40,8 @@ angular.module('app.feed', ['ngRoute'])
         });
     };
 
-    $scope.getPosts = function() {
-        Posts.fetchPosts()
+    $scope.getPosts = function(querystring) {
+        Posts.fetchPosts(querystring)
         .success(function(data) {
             $scope.posts = data;
         })
@@ -41,11 +49,36 @@ angular.module('app.feed', ['ngRoute'])
             console.log(data);
         });
     }
-
-    if(!$routeParams.blogid) {
+    $scope.filterPosts = function() {
+        console.log("fetching");
+        var query = "?tag=";
+        for(var i = 0; i < $scope.tags.length; i++) {
+            if(i == 0) {
+                query += $scope.tags[i];
+            } else {
+                query += "&tag="+$scope.tags[i];
+            }
+        }
+        $scope.getPosts(query);
+    }
+    $scope.addTag = function() {
+        $scope.tags.push($scope.tag);
+        $scope.tag = "";
+        $scope.filterPosts();
+    }
+    $scope.resetTags = function() {
+        $scope.tags = [];
         $scope.getPosts();
-    } else {
+    }
+
+    if($routeParams.blogid) {
         $scope.getPostsForBlog($routeParams.blogid);
+    } else if($routeParams.tag) {
+        console.log("true");
+        $scope.tag = $routeParams.tag;
+        $scope.addTag();
+    } else {
+        $scope.getPosts();
     }
 
     $scope.fetchCommentsForPost = function(post) {
