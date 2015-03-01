@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
-var Blog = require("./models/blog");
+var Blog = require('./models/blog');
 var User = require('./models/user');
+var Post = require('./models/post');
 
 exports.getBlogs = function(request, response) {
     filters = {};

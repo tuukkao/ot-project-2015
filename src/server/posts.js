@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 var Post = require("./models/post");
 var Blog = require("./models/blog");
+var User = require("./models/user")
 
 exports.getPosts = function(request, response) {
     filters = {};
@@ -28,7 +29,6 @@ exports.getPosts = function(request, response) {
 };
 
 exports.addPost = function(request, response) {
-    request.body.parent_blog = request.params.blogid;
     post = new Post(request.body);
     post.save(function(err) {
         if(err) return response.send(err);

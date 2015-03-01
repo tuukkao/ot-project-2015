@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var User = require('./models/user');
 var Blog = require('./models/blog');
+var Post = require('./models/post');
 var jwt = require('jsonwebtoken');
 var config = require('./config');
 

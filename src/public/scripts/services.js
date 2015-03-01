@@ -44,6 +44,7 @@ angular.module('app')
             { blogid: blogId});
         },
         addPost: function(post) {
+            console.log(post);
             return $http.post(ENV.apiEndpoint + '/post', {
                 title: post.title,
                 content: post.content,
