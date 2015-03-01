@@ -1,26 +1,24 @@
 <div ng-controller='profileController'>
-    <p>
-        <div class="description">
-            <i>{{ user.description }}</i><br />
-            <strong>Blogs: <br />{{ user.blogs }}</strong><br />
-            <strong>Blogs followed: <br />{{ user.blogs_followed }}</strong><br />
-        </div>
-        <div class="profile-picture">
+    <div class="row col-md-12 well well-sm centered"><h2>{{ user.display_name }}</h2></div>
+    <div class="row col-md-12">
+        <div class="col-md-4 profile-picture">
             <img src="/images/{{ user.profile_picture }}" alt="profile picture" />
-            <i><br />{{ user.display_name }} joined at {{ user.created_at }}</i><br />
         </div>
-    </p>
+        <div class="col-md-8">
+            <h3>Description</h3>
+            <div class="well well-sm">
+                <p>{{ user.description }}</p>
+            </div>
+            <h3>Blogs</h3>
+            <div class="well well-sm" ng-repeat="blog in user.blogs">
+                <a href="#feed/{{blog._id}}"><h4>{{ blog.title }}</h4></a>
+                <p class="indent"><i>{{ blog.description }}</i></p>
+            </div>
+            <h3>Blogs Followed</h3>
+            <div class="well well-sm" ng-repeat="followed in user.blogs_followed">
+                <a href="#feed/{{followed._id}}"><h4>{{ followed.title }}</h4></a>
+                <p class="indent"><i>{{ followed.description }}</i></p>
+            </div>
+        </div>
+    </div>
 </div>
-<style>
-    .profile-picture
-    {
-        float: right;
-        margin: 10px 10px 10px 10px;
-        text-align: center;
-    }
-    .description
-    {
-        display: block;
-        float: left;
-    }
-</style>

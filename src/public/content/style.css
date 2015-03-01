@@ -55,3 +55,13 @@ p
     float: right;
     margin-right: 15px;
 }
+
+.indent {
+    margin-left: 4em;
+}
+.profile-picture img {
+    max-width: 100%;
+}
+.centered {
+    text-align: center;
+}
