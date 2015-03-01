@@ -1,5 +1,13 @@
 <div class="blogs-template" ng-controller="blogController">
     <div class="blogs container-fluid"  >
+        <div class="row control well well-sm">
+                <div class="col-md-6">
+                    <h3>Blogs</h3>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-default right-float" ng-click="newBlog()">Add Blog</button>
+                </div>
+        </div>
         <div class="blog-item col-md-12 well well-lg" ng-repeat="blog in blogs">
             <div class="row">
                 <div class="col-md-12">

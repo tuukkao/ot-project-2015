@@ -40,7 +40,7 @@ angular.module('app')
             return $http.get(ENV.apiEndpoint + '/post');
         },
         fetchPostsForBlog: function(blogId) {
-            return $http.get(ENV.apiEndpoint + '/post?blogid=' + blogId,
+            return $http.get(ENV.apiEndpoint + '/post?parent_blog=' + blogId,
             { blogid: blogId});
         },
         addPost: function(post) {
