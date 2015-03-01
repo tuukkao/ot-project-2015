@@ -18,7 +18,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <a href="#feed/{{blog._id}}"><h3>{{ blog.title }}</h3></a>
-                    <i>Created at {{ blog.created_at }}</i>
+                    <i>Created at {{ blog.created_at | date : 'longDate' }}</i>
                 </div>
             </div>
             <div class="row">

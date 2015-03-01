@@ -7,7 +7,7 @@
             <div class="post-body" ng-class="{ hidden:post.hide,chaldean:!post.hide}">
                 <div class="panel-body"><p>{{ post.content }}</p></div>
                 <div class="post-footer panel-footer">
-                    <p><i>{{ post.created_at }}</i> {{ blog.author.display_name }}</p><br />
+                    <p><i>{{ post.created_at | date : 'longDate' }}</i> {{ blog.author.display_name }}</p><br />
                     <p>Tags: <span ng-repeat="tag in post.tags">{{ tag }} </span></p>
                 </div>
                 <div class="comment-container well well-lg">
@@ -20,7 +20,7 @@
                                         <img src="/images/{{ comment.author.profile_picture }}"/><span class="author">{{ comment.author.display_name }}</span>
                                     </div>
                                 </div>
-                                <div class="comment-body well well-sm col-md-11"><p><i>At {{ comment.created_at }}</i>:<br />{{ comment.comment.trim() }}</p></div>
+                                <div class="comment-body well well-sm col-md-11"><p><i>At {{ comment.created_at | date : 'longDate' }}</i>:<br />{{ comment.comment.trim() }}</p></div>
                             </div>
                         </div>
                     </div>
