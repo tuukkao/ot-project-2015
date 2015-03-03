@@ -2,21 +2,24 @@
     <form ng-submit="addPost(post)">
         <div class="row">
             <div class="form-group col-md-12">
-                <label for="title">Title</label>
-                <input class="form-control" type="text" name="title" value="" ng-model="post.title" required="true"/>
+                <label for="post-title">Title</label>
+                <input class="form-control" type="text" id="post-title" name="title" value="" ng-model="post.title" required="true"/>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <textarea rows="35" class="form-control"  ng-model="post.content" required="true"></textarea>
+                <label class="sr-only" for="post-content">Post content</label>
+                <textarea rows="35" class="form-control"  ng-model="post.content" required="true" id="post-content"></textarea>
             </br>
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-6">
                 <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">#</span>
-                    <input class="form-control" type="text" name="tag" ng-model="tag" value="">
+                    <div class="input-group-addon" id="basic-addon1">
+                        <label for="post-tag">#</label>
+                    </div>
+                    <input class="form-control" type="text" name="tag" ng-model="tag" id="post-tag" placeholder="Tag" value="">
                 </div>
                 <button class="btn btn-default" type="button" ng-click="addTag(tag)">Add Tag</button>
             </div>
