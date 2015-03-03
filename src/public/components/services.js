@@ -1,4 +1,7 @@
 angular.module('app.services', [])
+
+.filter('unsafe', function($sce) { return $sce.trustAsHtml; })
+
 .factory('Blogs', ['$http', 'ENV', function($http, ENV) {
     return {
         fetchBlogs: function() {

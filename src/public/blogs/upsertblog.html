@@ -18,9 +18,12 @@
                 <div class="form-group col-md-6">
                     <label for="tags">Tags</label>
                     <ul class="list-group">
-                        <li ng-repeat="tag in blog.tags track by $index" class="list-group-item">{{ tag }}</li>
+                        <li ng-repeat="tag in blog.tags track by $index" class="list-group-item">#{{ tag }}</li>
                     </ul>
-                    <input class="form-control" type="text" name="tag" ng-model="tag" value="">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">#</span>
+                        <input class="form-control" type="text" name="tag" ng-model="tag" value="">
+                    </div>
                     <button class="btn btn-default" type="button" ng-click="addTag(tag)">Add Tag</button>
                 </div>
             </div>
