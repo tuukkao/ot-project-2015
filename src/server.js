@@ -1,3 +1,5 @@
+/* Entry point for the server. */
+
 var config = require('./server/config');
 var express = require('express');
 var expressApp = express();

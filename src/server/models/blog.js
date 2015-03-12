@@ -1,3 +1,5 @@
+/* A Mongoose model for the blogs. */
+
 var mongoose = require("mongoose");
 var blogSchema = mongoose.Schema({
     title: {type: String, required: true },

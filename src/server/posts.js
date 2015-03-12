@@ -1,8 +1,11 @@
+/* Api functions for the /post endpoint. */
+
 var mongoose = require("mongoose");
 var Post = require("./models/post");
 var Blog = require("./models/blog");
 var User = require("./models/user")
 
+/* Get a (filtered) list of posts. */
 exports.getPosts = function(request, response) {
     filters = {};
     if (request.query.parent_blog) filters.parent_blog = request.query.parent_blog;
@@ -29,7 +32,10 @@ exports.getPosts = function(request, response) {
     });
 };
 
+/* Adds a new post. */
 exports.addPost = function(request, response) {
+    // Todo: Right now the user can add a post to any blog they like.
+    // Preventing that would be nice.
     post = new Post(request.body);
     post.save(function(err) {
         if(err) return response.send(err);
@@ -37,6 +43,7 @@ exports.addPost = function(request, response) {
     });
 };
 
+/* Get a single post. */
 exports.getPost = function(request, response) {
     Post.findOne({'parent_blog': request.params.blogid, '_id': request.params.postid}, "-comments", function(err, post) {
         if (err) {
@@ -49,6 +56,7 @@ exports.getPost = function(request, response) {
     });
 };
 
+/* Updates a post. */
 exports.updatePost = function(request, response) {
     Post.update({'_id': request.params.postid, 'author': request.user_id}, function(err, numRows) {
         if (err) {
@@ -61,6 +69,7 @@ exports.updatePost = function(request, response) {
     });
 };
 
+/* Deletes a post. */
 exports.deletePost = function(request, response) {
     Post.remove({'_id': request.params.postid, 'parent_blog.author': request.user_id}, function(err) {
         if (err) return response.send(err);

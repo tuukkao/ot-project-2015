@@ -1,3 +1,5 @@
+/* Api functions for the /user endpoint. */
+
 var mongoose = require('mongoose');
 var User = require('./models/user');
 var Blog = require('./models/blog');
@@ -5,6 +7,7 @@ var Post = require('./models/post');
 var jwt = require('jsonwebtoken');
 var config = require('./config');
 
+/* Get a list of all the users. */
 exports.getUsers = function (request, response) {
     User.find({}, "-__v -username -password -token")
     .populate('blogs')
@@ -15,6 +18,7 @@ exports.getUsers = function (request, response) {
     });
 }
 
+/* Registers a new user. */
 exports.addUser = function (request, response)
 {
     user = new User(request.body);
@@ -35,6 +39,7 @@ exports.addUser = function (request, response)
     });
 }
 
+/* Get a single user's profile. */
 exports.getUser = function(request, response) {
     User.findOne({'_id': request.params.userid})
     .populate('blogs')
@@ -59,6 +64,7 @@ exports.getUser = function(request, response) {
     });
 };
 
+/* Update user profile. */
 exports.updateUser = function(request, response) {
     User.update({ '_id': request.user_id }, request.body, function(err, numRows) {
         if (err) {
@@ -71,6 +77,7 @@ exports.updateUser = function(request, response) {
     });
 };
 
+/* Deletes a user. */
 exports.deleteUser = function(request, response) {
     User.remove({ '_id': request.user_id }, function(err) {
         if (err) return console.error(err);

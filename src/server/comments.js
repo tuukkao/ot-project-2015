@@ -1,6 +1,9 @@
+/* Api functions for the /post/<postid>/comment endpoint. */
+
 var mongoose = require("mongoose");
 var Post = require("./models/post");
 
+/* Gets all the comments for the given post. */
 exports.getCommentsForPost = function(request, response) {
     Post.findOne({'_id': request.params.postid}, 'comments')
     .populate('comments.author', '_id display_name profile_picture')
@@ -10,9 +13,11 @@ exports.getCommentsForPost = function(request, response) {
     });
 };
 
+/* Adds a new comment to the given post. */
 exports.addCommentToPost = function(request, response) {
     Post.findOne({'_id': request.params.postid}, 'comments', function (err, post) {
         if (err) return request.send(err);
+        // Todo: Don't accept the request body as is.
         post.comments.addToSet(request.body);
         post.save(function(err) {
             if(err) return response.send(err);
@@ -21,6 +26,7 @@ exports.addCommentToPost = function(request, response) {
     });
 };
 
+/* Gets a single comment with the given post and comment id's. */
 exports.getComment = function(request, response) {
     Post.findOne({'_id': request.params.postid}, 'comments', function(err, post) {
         if(err) return response.send(err);
@@ -34,6 +40,7 @@ exports.getComment = function(request, response) {
     });
 };
 
+/* Modifies a comment. */
 exports.updateComment = function(request, response) {
     set = {};
     for (var key in request.body) {
@@ -48,6 +55,7 @@ exports.updateComment = function(request, response) {
     });
 };
 
+/* Deletes a comment. */
 exports.deleteComment = function(request, response) {
     Post.findOne({'_id': request.params.postid}, 'comments', function(err, post) {
         if(err) return response.send(err);

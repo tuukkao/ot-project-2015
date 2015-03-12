@@ -1,3 +1,5 @@
+/* Express api routes. */
+
 module.exports = function(app){
     var paginate = require("express-paginate");
     var blogs = require("./blogs");

@@ -1,3 +1,5 @@
+/* A global config object for the backend server. */
+
 var config = {};
 
 config.api_port = process.env.PORT || 8080;
